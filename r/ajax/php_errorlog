@@ -1,0 +1,62 @@
+[26-Feb-2018 09:13:06 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-02-26 16:13:06' for key 'PRIMARY'' in /home/zimonh53/public_html/abracadabraa/r/ajax/delete.php:15
+Stack trace:
+#0 /home/zimonh53/public_html/abracadabraa/r/ajax/delete.php(15): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/abracadabraa/r/ajax/delete.php on line 15
+[23-Apr-2018 23:41:01 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-04-24 06:41:01' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[24-Apr-2018 22:43:23 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-04-25 05:43:23' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[26-Apr-2018 04:07:32 CST6CDT] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 22
+[26-Apr-2018 04:07:35 CST6CDT] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 22
+[26-Apr-2018 04:08:45 CST6CDT] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 22
+[26-Apr-2018 04:08:46 CST6CDT] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 22
+[26-Apr-2018 04:08:49 CST6CDT] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 22
+[26-Apr-2018 04:18:19 CST6CDT] PHP Fatal error:  Class 'simple_html_dom' not found in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 23
+[26-Apr-2018 04:18:28 CST6CDT] PHP Fatal error:  Class 'simple_html_dom' not found in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 23
+[26-Apr-2018 04:18:52 CST6CDT] PHP Fatal error:  Class 'simple_html_dom' not found in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 23
+[26-Apr-2018 04:28:18 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 30
+[26-Apr-2018 04:28:23 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 30
+[26-Apr-2018 04:29:06 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 30
+[26-Apr-2018 04:33:06 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[26-Apr-2018 04:33:11 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[26-Apr-2018 04:34:17 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[26-Apr-2018 04:34:33 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[26-Apr-2018 04:34:48 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[26-Apr-2018 04:36:10 CST6CDT] PHP Fatal error:  Call to a member function getElementsByTagName() on null in /home/zimonh53/public_html/qt/r/ajax/grabber.php on line 31
+[28-Apr-2018 14:40:44 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-04-28 21:40:44' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[15-May-2018 10:31:19 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-05-15 17:31:19' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[15-May-2018 11:20:34 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-05-15 18:20:34' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[21-May-2018 18:13:31 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-05-22 01:13:31' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[21-May-2018 18:43:52 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-05-22 01:43:52' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
+[21-May-2018 19:40:52 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2018-05-22 02:40:52' for key 'PRIMARY'' in /home/zimonh53/public_html/qt/r/ajax/edit.php:22
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/edit.php(22): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/edit.php on line 22
