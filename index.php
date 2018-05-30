@@ -1,6 +1,6 @@
 <?php
 /********Set develop modus********/
-$d = '?5574';
+$d = '?5577';
 //$d = '?'.date("Y.m.d.h.m.s");
 
 /********uses the .htacces file to redirect and set the page variable********/

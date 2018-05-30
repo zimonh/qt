@@ -1,9 +1,9 @@
 /*jshint esversion: 6 */
 
 /* PHP like string replace */
-str_replace = (g, c) =>{
+str_replace = (g,c)=>{
 	const t = ["&amp;","&#33;","&quot;","&#039;","&lt;","&gt;","&#63;","&#42;","&#40;","&#41;","&#47;","&#36;","&#92;","&#61;","&#46;"];
-	let	  o = ["&","!",'"',"'","<",">","?","*","(",")","/","$","\\","=","."],
+	let	o = ["&","!",'"',"'","<",">","?","*","(",")","/","$","\\","=","."],
     	r, l, n, p = 0,
         a , i = "",
         u = [].concat(t),
@@ -29,11 +29,11 @@ str_replace = (g, c) =>{
 
 const dec_theme = 'ace/theme/cobalt',
 	  dec_trigg = '#encr_btn',
-	  dec_input = '#encr_input';
+	  dec_input = '#encr_input',
 
-uni_crypt = (enc,html,id) =>{
+uni_crypt = (enc,html,id)=>{
 	const u = eval("q"+id);
-	console.log(enc,html,id);
+	//console.log(enc,html,id);
 	try{
 		let	dec = CryptoJS.AES.decrypt(
 			enc.html(),
@@ -48,22 +48,22 @@ uni_crypt = (enc,html,id) =>{
 		u.setValue(dec, -1);
 	}catch(e){u.setValue('encrypted', -1);}
 	u.setTheme(dec_theme);
-}
+},
 
-decrypt = () =>{
+decrypt = ()=>{
 	//console.log('decrypt');
-	$('enc').each(function(index){
+	$('enc').each(function(){
 		const	enc = $(this),
 				html = enc.parent(),
 				id = $(this).parent().attr("id").slice(4);
 		uni_crypt(enc,html,id);
 	});
-};
+},
 
 AESd = date =>{
 	//console.log(date);
 	const enc  = $('#AESd'+date),
 		  html = enc.parent(),
 		  id   = html.attr("id").slice(4);
-	setTimeout(function(){ uni_crypt(enc,html,id);}, 50);
+	setTimeout(()=> uni_crypt(enc,html,id), 50);
 };
