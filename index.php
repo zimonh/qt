@@ -1,7 +1,7 @@
 <?php
 /********Set develop modus********/
 $d = '?5577';
-//$d = '?'.date("Y.m.d.h.m.s");
+$d = '?'.date("Y.m.d.h.m.s");
 
 /********uses the .htacces file to redirect and set the page variable********/
 $page = (isset($_GET['p']) ? $_GET['p'] : null);

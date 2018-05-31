@@ -272,6 +272,7 @@ Q = {
 
 	/*If there is a script in the live edit block it by replacing the script tags.*/
 	script_detected(html){
+		console.log(1233);
 		let replaced = false;
 		html = html.replace(/<script/g,token=>{replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
 		//if(replaced){console.log('script_detected - Press Ctrl to activate');}
@@ -295,7 +296,7 @@ Q = {
 					const html = $('#qt').val();
 					$(i+'_result').html(html);
 				}else{
-					const id = $(this).parent().attr('id').substring(6);
+					const id = a.parent().attr('id').substring(6);
 					$('#html'+id).html($('#tahtml'+id).val());
 				}
 			}
