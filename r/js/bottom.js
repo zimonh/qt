@@ -1040,23 +1040,21 @@ $('.send_btn').click(function(){
 })();
 
 
-/*Get data from external url usefull to cal on the platform (adjust is to replace local references with absolute links)*/
-const getbyurl = (d)=>{
-
-	let limiter = 0;
-	const refresh_interval = setInterval(refresh, 5);
-
-	function refresh(){
-		if($('#'+d.getid).length !== 0 || limiter > 700){clearInterval(refresh_interval);}
-		d.loaded();
-		limiter++;
+/*Get data from external url useful to cal on the platform (adjust is to replace local references with absolute links)*/
+const getbyurl = d =>{
+	if(d.loaded !== undefined){
+		let limiter = 0;
+		const refresh = ()=>{
+			if($('#'+d.getid).length !== 0 || limiter > 700){clearInterval(refresh_interval);}
+			d.loaded();
+			limiter++;
+		};
+		const refresh_interval = setInterval(refresh, 5);
 	}
 
     $.ajax({
     	url: "r/ajax/grabber.php",
     	method: "POST",
     	data:{id:d.getid, href:d.gethref, adjust:d.adjust},
-    	success: function(data){
-    		$("#"+d.where).html(data);
-    	}
+    	success: data => $("#"+d.where).html(data)
     });};
