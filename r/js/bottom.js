@@ -1,8 +1,8 @@
 /*jshint esversion: 6 */
 const def_theme = "ace/theme/monokai",
-	  def_theme_class = "ace-monokai",
-	  page = window.location.pathname.substring(1),
-	  token = '24c2y3qt2hbccccca3$@';
+	def_theme_class = "ace-monokai",
+	page = window.location.pathname.substring(1),
+	token = '24c2y3qt2hbccccca3$@';
 
 let	send_mode_enc,
 	resetcountdown = false,
@@ -16,10 +16,10 @@ if(window.location.href.slice(-2) =="?!"){
 	$('body').addClass('save_mode').prepend(`<div class="intro">In this version of the ${notifi} page no html will run and you can view and permanently delete saves.</div>`);}else{save_mode = false;}
 
 /*Global icon function*/
-ic = n => `<svg class="icon-${n}"><use xlink:href="r/icons.svg#icon-${n}"></use></svg>`,
+ic = n => `<svg class="icon-${n}"><use xlink:href="r/icons.svg#icon-${n}"></use></svg>`;
 
 /*the Q object that creates a block around all the functions*/
-Q = {
+const Q = {
 
 	/*Main menu at bottom*/
 	inmenu(){
@@ -41,8 +41,8 @@ Q = {
 
 		$(document).ready(()=>{
 			const o = $('r_out'),	m = 20, s = 800, b = '_button';
-			$('.right'+b).click(()=> o.animate({scrollLeft: o.scrollLeft()+(o.width()-m)},s));
-			$('.left'+b).click(()=>  o.animate({scrollLeft: o.scrollLeft()-(o.width()-m)},s));
+			$('.right'+b).click(()=>{ o.animate({scrollLeft: o.scrollLeft()+(o.width()-m)},s);});
+			$('.left'+b).click(()=>{  o.animate({scrollLeft: o.scrollLeft()-(o.width()-m)},s);});
 
 		});},
 
@@ -86,7 +86,9 @@ Q = {
 					<script>
 						const q${l} = ace.edit("editor${l}"),
 							 qf${l} = $("#tahtml${l}");
-						q${l+g}on("change", ()=> qf${l}.val(q${l+g}getValue()));
+						q${l+g}on("change", ()=>{
+						qf${l}.val(q${l+g}getValue());
+						});
 					<\/script>
 				</qt_menu>
 				<all_safes id="safes${l}">${s}</all_safes>`;
@@ -104,7 +106,7 @@ Q = {
 			s.html(ic('return'));
 			s.attr('title', 'Return');
 		}
-		s.on('click', ()=>{
+		s.on('click',()=>{
 			if(save_mode){	window.location.href = window.location.href.slice(0,-2);
 			}else{			window.location.href = page+"?!";}
 		});},
@@ -147,7 +149,7 @@ Q = {
 		Q.changes(dec_input);
 		Q.changes('#page');
 		Q.save_btn();
-		$('.home_button').on('click', ()=>{if(page!==''){window.location.href = "/";}});
+		$('.home_button').on('click',()=>{if(page!==''){window.location.href = "/";}});
 		Q.enc_length(true);
 		Q.all_recent();
 		Q.all_triggers();},
@@ -159,24 +161,26 @@ Q = {
 		/*detect delete, backspace, Ctrl z and Ctrl y*/
 		l.unbind('.reset');
 		l.unbind('keyup');
-		l.keyup(e=>{
+		l.keyup(function(e){
 			if(e.keyCode == 8 || e.keyCode == 46 || e.ctrlKey && e.keyCode == 90 || e.ctrlKey && e.keyCode == 89 || e.keyCode == 9){Q.changed(this);}
 		});
 		/*detect adding using keyboard*/
-		l.on('propertychange.reset input.reset', e=>{
+		l.on('propertychange.reset input.reset', function(e){
 			let valueChanged = false;
 			if(e.type=='propertychange'){valueChanged = e.originalEvent.propertyName=='value';}else{valueChanged = true;}
 			if(valueChanged){Q.changed(this);}
 		});
 		/*detect paste and cut*/
-		l.on('paste.reset cut.reset', ()=> Q.changed(this));
+		l.on('paste.reset cut.reset',function(){Q.changed(this);});
 		/*detect dragging text*/
 		if(el == dec_input){
 			l.on("dragend.reset",()=>{
 				Q.changed(el);
 			});
 		}else{
-			l.parent().on("dragend.reset", ()=> Q.changed($(this).find('textarea')));
+			l.parent().on("dragend.reset",function(){
+				Q.changed($(this).find('textarea'));
+			});
 		}},
 
 	/*Triggers on change*/
@@ -224,9 +228,9 @@ Q = {
 		let	w,w2,p,l,ml,ml2;
 
 		if(m){		w='17px'; 	w2='27px'; 	p='3px 5px';	l='8px';	ml='35px'; 	ml2 = '0';
-			setTimeout(()=>o.addClass('big_unc_inp').removeAttr('style'), t+100);
+			setTimeout(()=>{o.addClass('big_unc_inp').removeAttr('style');}, t+100);
 		}else{		w='0'; 		w2='0'; 	p='4px 0';		l='0';		ml='0'; 	ml2 = '-32px';
-			setTimeout(()=>o.removeClass('big_unc_inp').removeAttr('style'), t+100);
+			setTimeout(()=>{o.removeClass('big_unc_inp').removeAttr('style');}, t+100);
 		}
 		$('.helptext')	.animate({marginLeft:ml2},		y);
 		if(!r){o		.animate({marginLeft:ml},		y);}
@@ -272,10 +276,10 @@ Q = {
 
 	/*If there is a script in the live edit block it by replacing the script tags.*/
 	script_detected(html){
-		console.log(1233);
 		let replaced = false;
-		html = html.replace(/<script/g,token=>{replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
-		//if(replaced){console.log('script_detected - Press Ctrl to activate');}
+		html = html.replace(/<script/g, function(token){replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
+		if(replaced){//console.log('script_detected - Press Ctrl to activate');
+		}
 		return html;},
 
 	/*Safe the inmenu text in local storage and show it live on the page.*/
@@ -289,14 +293,15 @@ Q = {
 	ctrl_enter(el){
 		const a = $(el+' .ace_text-input'), i = 'inmenu';
 		a.unbind('keydown');
-		a.keydown(e=>{
+		a.keydown(function(e){
 			if(e.ctrlKey && e.keyCode == 13){
+
 				//console.log('ctrl_enter' + el);
 				if(el==i){
 					const html = $('#qt').val();
 					$(i+'_result').html(html);
 				}else{
-					const id = a.parent().attr('id').substring(6);
+					const id = $(this).parent().attr('id').substring(6);
 					$('#html'+id).html($('#tahtml'+id).val());
 				}
 			}
@@ -328,7 +333,7 @@ Q = {
 			r.css(d,b);
 			$(s).css(d,b);
 			let menu_heights = r.attr('data-height');
-			r.animate({height:menu_heights},{complete: ()=>{
+			r.animate({height:menu_heights},{complete:()=>{
 				menu_heights = $('#editor'+id).height();
 				if(menu_heights>360){
 				r.animate({height:menu_heights+60+'px'});}
@@ -379,7 +384,7 @@ Q = {
 				q${l}.setTheme(def_theme);
 				${g}setMode("ace/mode/html");
 				${g}setUseWorker(false);
-				${g}on("change", ()=> qf${l}.val(${g}getValue()));
+				${g}on("change", ()=>{ qf${l}.val(${g}getValue()); });
 				${g}setUseWrapMode(true);
 				q${l}.setOptions({fontSize:"16px",showGutter:false,showPrintMargin:false});
 				q${l}.setValue($("#tahtml${l}").val(), -1);<\/script>
@@ -409,7 +414,9 @@ Q = {
 			method: "POST",
 			data:{id: id, save: save},
 			dataType: "text",
-			success: data=>Q.single_row(id,data)
+			success: function(data){
+				Q.single_row(id,data);
+			}
 		});},
 
 	/*Add this row to the safes and update the live data.*/
@@ -420,7 +427,9 @@ Q = {
 			method: "POST",
 			data:{id: id},
 			dataType: "text",
-			success: data=>Q.single_row(id,data)
+			success: function(data){
+				Q.single_row(id,data);
+			}
 		});},
 
 	/*Load a safe*/
@@ -435,7 +444,7 @@ Q = {
 			method: "POST",
 			data:{date: date},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				Q.single_row(id,data,false);
 				p.parent().find('.getsafe_btn').removeClass(h);
 				$(e).addClass('hl_live');
@@ -455,14 +464,16 @@ Q = {
 			method: "POST",
 			data:{date: date, name: name},
 			dataType: "text",
-			success: data=>Q.toggle_safe(p.find(n),true)
+			success: function(data){
+				Q.toggle_safe(p.find(n),true);
+			}
 		});},
 
 	/*Get rows based on missing from live data*/
 	qt_newrows(send){
 		//console.log('qt_newrows');
 		let ids = '';
-		$("alivedata ld").each(function(){
+		$("alivedata ld").each(function(index){
 			ids += $(this).attr("title").trim()+',';
 		});
 		ids = ids.slice(0,-1);
@@ -471,7 +482,7 @@ Q = {
 			method: "POST",
 			data:{ ids: ids, page: page },
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				let result = '';
 				data = data.split("*");
 				data.pop();
@@ -501,7 +512,7 @@ Q = {
 			method: "POST",
 			data:{ tokenoflove: token, html: html, page: new_page},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				localStorage.setItem("inmenu",'');
 				if(new_page!==page){
 					//uses php no cash so all content gets loaded
@@ -558,7 +569,7 @@ Q = {
 			method: "POST",
 			data:{id: id, page: new_page, html: html, tokenoflove: token},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				/*Go to the right page*/
 				if(!page.split(',').includes(new_page)){
 					window.location.href = '/'+ new_page.replace(/ /g,"_");
@@ -599,7 +610,7 @@ Q = {
 			method: "POST",
 			data:{id: id},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				let result = '';
 				const b = '<button title="',
 					  u = '</button>',
@@ -696,7 +707,7 @@ Q = {
 			method: "POST",
 			data:{id: id, tokenoflove: token, date: date},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				Q.au('delete.mp3');
 				Q.safes(id,true);
 			}
@@ -709,7 +720,7 @@ Q = {
 			method: "POST",
 			data:{id: id, tokenoflove: token, destroy: destroy},
 			dataType: "text",
-			success: data=>{
+			success: function(data){
 				//console.log('Deleted:'+id);
 				const l = "livedata > ld[title='"+id+"']",
 				      b = $('#qt'+id),
@@ -742,7 +753,7 @@ Q = {
 				method: "POST",
 				data:{id: id, tokenoflove: token},
 				dataType: "text",
-				success: data=>{
+				success: function(data){
 					//console.log('Deleted:'+id);
 					Q.au('delete.mp3');
 					if(b.parent()[0].tagName !== "ALLSAVE"){
@@ -759,12 +770,12 @@ Q = {
 
 	/*Get the live data so later it can be compared.*/
 	ld(m){
-		console.log('ld');
+		//console.log('ld');
 		$.ajax({
 			url: "r/ajax/ld.php",
 			method: "POST",
 			data:{page: page},
-			success: data=>{
+			success: function(data){
 				let result = '';
 				data = data.split(",");	data.pop();
 				resetcountdown = true;
@@ -792,7 +803,7 @@ Q = {
 		if(l == 0 && send && !emptytest){Q.qt_newrows(send);}
 		if(l == 0 && send && emptytest){Q.sendit();}
 
-		$("alivedata ld").each(function(){
+		$("alivedata ld").each(function(index){
 			const al_id 	= $(this).attr("title").trim(),
 			      bl_id 	= $(bl+al_id+"']").attr("title"),
 				  bl_date 	= $(bl+al_id+"']").html(),
@@ -803,17 +814,17 @@ Q = {
 				  d 		= $("#editor"+al_id);
 
 			if(al_id + bl_id === al_id + "undefined"){
-				$(this)			.addClass(hm).removeClass(m);
-				u				.addClass(hm);
-				d				.addClass(f);
+				$(this)				.addClass(hm).removeClass(m);
+				u					.addClass(hm);
+				d					.addClass(f);
 			}else if(bl_date === al_date.trim()){
-				$(al+bl_id+"']").addClass(m).removeClass(c);
-				u				.removeClass(c);
-				d				.removeClass(e+' '+f);
+				$(al+bl_id+"']")	.addClass(m).removeClass(c);
+				u					.removeClass(c);
+				d					.removeClass(e+' '+f);
 			}else if(bl_date !== al_date.trim()){
-				u				.addClass(he);
-				d				.addClass(e);
-				$(this)			.addClass(he).removeClass(m);
+				u					.addClass(he);
+				d					.addClass(e);
+				$(this)				.addClass(he).removeClass(m);
 
 			}
 		});
@@ -880,7 +891,7 @@ $(document).ready(()=>{
 });
 
 /*Add ACE editor to all the code blocks*/
-$('qt_menu').children('.editor').each(function(){
+$('qt_menu').children('.editor').each(function(index){
 	const id = $(this).attr('id').substring(6),
 		  h = $("#html"+id).html().trim();
 	let e;
@@ -900,7 +911,7 @@ $('qt_menu').children('.editor').each(function(){
 
 
 /*Toggle the inmenu*/
-$('#btn_min').click( ()=>{
+$('#btn_min').click(()=>{
 	//console.log('#btn_min click');
 	Q.au('slide.mp3');
 	let t, b, cl, o, w, mb;
@@ -914,7 +925,7 @@ $('#btn_min').click( ()=>{
 		const h = d.height(), sh = d.scrollTop();
 		if(h<=(sh+813)){$('html, body').animate({scrollTop:h},'50');}
 	}
-	bm.animate({width:w},{complete: ()=> bm.text(t)});
+	bm.animate({width:w},{complete:()=>{bm.text(t);}});
 	$('inmenu').animate({bottom:b});
 	$('body').animate({marginBottom:mb});
 	$('buttons').animate({opacity:o});
@@ -951,7 +962,7 @@ $(dec_trigg).click(()=>{
 	if(m2&&!h){	w2 = '0'; 		p2 = '4px 0'; 	ml = '0';}
 	if(m2){
 		pa.animate({width:w2, padding:p2, marginLeft:ml},{
-			complete: ()=>{
+			complete:()=>{
 				if(h){pa.removeClass(up);}else{pa.addClass(up);}
 				pa.removeAttr('style');}
 		});
@@ -960,14 +971,14 @@ $(dec_trigg).click(()=>{
 	if(m1&&h){if(h){ro.removeClass(re);}else{ro.addClass(re);}}
 	if(!m1&&!h&&m2||!m1&&h){l2='300px';}
 	if(!m1&&!h&&!m2){		l2='450px';}
-	if(!m1&&h){ ro.animate({left:l2},{complete:()=>ro.removeClass(re).removeAttr('style')});}
-	if(!m1&&!h){ro.animate({left:l2});setTimeout(()=>ro.addClass(re).removeAttr('style'), 800);}
+	if(!m1&&h){ ro.animate({left:l2},{complete:()=>{ro.removeClass(re).removeAttr('style');}});}
+	if(!m1&&!h){ro.animate({left:l2});setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);}
 	ei.animate({width:w, padding:p, marginLeft:m},{
-		complete: ()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
+		complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
 	});decrypt();});
 
 /*Toggle the buttons next to each code block*/
-$('#hide_btn').click( ()=>{
+$('#hide_btn').click(()=>{
 	//console.log('#hide_btn');
 	const s = $('styleholder'),
 		  h = $('#hide_btn');
@@ -980,7 +991,7 @@ $('#hide_btn').click( ()=>{
 	}});
 
 /*Send html block to qt server*/
-$('.send_btn').click( ()=>{
+$('.send_btn').click(function(){
 	//console.log('.send_btn');
 	if($(this).attr('id') === 'send_encrypted'){send_mode_enc = true;}else{send_mode_enc = false;}
 	const html = $('#qt').val().trim();
@@ -988,12 +999,14 @@ $('.send_btn').click( ()=>{
 	Q.ld(true);});
 
 
-(()=>{
+(function(){
+
 	/*add the audio files to pre-load*/
 	const a = ['delete.mp3','edit.mp3','got.wav','here.wav','other.mp3','send.mp3','slide.mp3'];
 	let b = '';
 	for(const value of a){ b += `<source src="r/sound/${value}"		type="audio/${value.split('.')[1]}">`;}
 	$('body').prepend(`<audio preload="auto">${b}</audio>`);
+
 
 	/*Timer that triggers the refresh*/
 	if(!save_mode){
@@ -1001,10 +1014,16 @@ $('.send_btn').click( ()=>{
 		const cm = 20;
 		let c = cm;
 	 	//Dont refresh if no one is looking
-		window.onblur  = ()=> window.blurred = true;
-		window.onfocus = ()=> window.blurred = false;
+		window.onblur  = ()=>{window.blurred = true; };
+		window.onfocus = ()=>{window.blurred = false;};
 		setInterval(()=>{
+
 			if(resetcountdown){c = cm; resetcountdown = false;}
+			/*if(c > (cm-2)){
+			console.log(c);
+			}if(c < 3){
+			console.log(c);
+			}*/
 			if(window.blurred){c = 3; return;}
 			if(c === 0){ Q.ld(false);c = cm;}
 			--c;
@@ -1014,7 +1033,10 @@ $('.send_btn').click( ()=>{
 				rgb = 'rgb('+(x*(cm-c))+', '+(y*(cm-c))+', '+(z*c)+')';
 			//END RESULT '39, 40, 34'
 			$('#btn_min').css('background-color',rgb);
+
 		}, 1000);}
+
+
 })();
 
 
