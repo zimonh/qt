@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 const def_theme = "ace/theme/monokai",
 	def_theme_class = "ace-monokai",
 	page = window.location.pathname.substring(1),
