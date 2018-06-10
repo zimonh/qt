@@ -25,7 +25,7 @@ const Q = {
 	inmenu(){
 		//console.log('inmenu');
 		const part_p = page.split(','), b = '<button title="', u = '</button>', c = '" class="', i='" id="', t = 'imp_toggle>', g = '_button big_', s = '_button small_';
-		const menu = `${b}Show/Hide menu${i}btn_min">add content${u}<textarea id="qt"></textarea><div id="editor"></div><buttons>${b}Send Encrypted${i}send_encrypted" style="display: inline-block;${c}send_btn">${ic('send-lock')+u+b}Send${i}send_raw${c}send_btn">${ic('send')+u}<input placeholder="page${i}page" value="${part_p[0]}">${b}Show/Hide edit buttons${i}hide_btn">${ic('eye-red')+u+b}Encrypt${i}encr_btn${c}decrypt_btn">${ic('lock')+u}<form id="encr_input_form"><input type="password${i}encr_input"></form>${b}Scroll left${c}left${g}l">${ic('ar-l')+u+b}Scroll right${c}right${g}r">${ic('ar-r')+u+b}Save mode${c}save${g}s">${ic('save')+u+b}Home${c}home${g}h">${ic('home')+u}</buttons><${t}</${t}<recent>${b}Scroll left${c}left${s}l">${ic('ar-l')+u}<r_out><r_in></r_in></r_out>${b}Scroll right${c}right${s}r">${ic('ar-r')+u+b}Save mode${c}save${s}s">${ic('save')+u+b}Home${c}home${s}h">${ic('home')+u}</recent>`;
+		const menu = `${b}Show/Hide menu${i}btn_min">add content${u}<textarea id="qt"></textarea><div id="editor"></div><buttons>${b}Send Encrypted${i}send_encrypted" style="display: inline-block;${c}send_btn">${ic('send-lock')+u+b}Send${i}send_raw${c}send_btn">${ic('send')+u}<input placeholder="page${i}page" value="${part_p[0]}">${b}Show/Hide edit buttons${i}hide_btn">${ic('eye-red')+u+b}Encrypt${i}encr_btn${c}decrypt_btn">${ic('lock')+u}<form id="encr_input_form"><input type="password${i}encr_input" autocomplete="new-password"></form>${b}Scroll left${c}left${g}l">${ic('ar-l')+u+b}Scroll right${c}right${g}r">${ic('ar-r')+u+b}Save mode${c}save${g}s">${ic('save')+u+b}Home${c}home${g}h">${ic('home')+u}</buttons><${t}</${t}<recent>${b}Scroll left${c}left${s}l">${ic('ar-l')+u}<r_out><r_in></r_in></r_out>${b}Scroll right${c}right${s}r">${ic('ar-r')+u+b}Save mode${c}save${s}s">${ic('save')+u+b}Home${c}home${s}h">${ic('home')+u}</recent>`;
 		$('inmenu').html(menu);},
 
 	/*The list of all recent pages and in save mode all the hidden pages*/
@@ -310,7 +310,7 @@ const Q = {
 	/*Toggle the edit menu triggered by each code block button.*/
 	edit_menu(e){
 		//console.log('edit_menu');
-		Q.au('slide.mp3');
+		Q.au.slide.play();
 		const id = $(e).attr('id').substring(2),
 			  d = 'display',
 			  b = 'block',
@@ -344,7 +344,7 @@ const Q = {
 	/*Toggle the safes menu triggered by the history button.*/
 	safes_menu(e){
 		//console.log('safes_menu');
-		Q.au('slide.mp3');
+		Q.au.slide.play();
 		const id = $('#safes' + $(e).parent().attr('id').substring(2)),
 			a = 'all_safes_show';
 		let	cl;
@@ -383,7 +383,6 @@ const Q = {
 					 qf${l}=$("textarea[id=tahtml${l}");
 				q${l}.setTheme(def_theme);
 				${g}setMode("ace/mode/html");
-				${g}setUseWorker(false);
 				${g}on("change", ()=>{ qf${l}.val(${g}getValue()); });
 				${g}setUseWrapMode(true);
 				q${l}.setOptions({fontSize:"16px",showGutter:false,showPrintMargin:false});
@@ -398,7 +397,7 @@ const Q = {
 			  h = 'hl_live';
 		$('#html'+id).html(decoded);
 		eval("q"+id).setValue(decoded,-1);
-		Q.au('got.wav');
+		Q.au.got.play();
 		$('#bu'+id).removeClass(h);
 		$('#qt'+id).find('.btn_delete').show();
 		if(type){
@@ -495,7 +494,7 @@ const Q = {
 
 				Q.checker(send,true);
 				$('all').append(result);
-				Q.au('got.wav');
+				Q.au.got.play();
 				Q.all_triggers();
 			}
 		});},
@@ -505,7 +504,7 @@ const Q = {
 		//console.log('sendit');
 		let html = $('#qt').val().trim();
 		const new_page = $('#page').val().trim();
-		Q.au('send.mp3');
+		Q.au.send.play();
 		if($(dec_input).val().trim() !== "" && send_mode_enc){html = Q.encryption_block(html);}
 		$.ajax({
 			url: "r/ajax/insert.php",
@@ -520,7 +519,7 @@ const Q = {
 					return false;
 				}
 				const onedata = data.split(",");
-				Q.au('here.wav');
+				Q.au.here.play();
 				$('all').append(Q.qt(html, onedata[0]));
 				$('alivedata, blivedata').append(`			<ld title="${onedata[0]}">${onedata[1].trim()}</ld>\n`);
 				//console.log('Sended: '+onedata[0]);
@@ -557,7 +556,7 @@ const Q = {
 		if($(e).attr("class") === 'btn_encryptit' && !enc_s){
 			if(!$('#bu'+id).hasClass('hl_live')){return false;}}
 
-		Q.au('edit.mp3');
+		Q.au.edit.play();
 
 		if($(e).attr("class") === 'btn_encryptit'){
 			html = Q.encryption_block(html);
@@ -577,7 +576,7 @@ const Q = {
 				}
 				Q.safes(id,false);
 				$('#html'+id).html($('#tahtml'+id).val());
-				Q.au('here.wav');
+				Q.au.here.play();
 				$('a'+l+', '+'b'+l).html(data);
 				$('#bu'+id).removeClass("hl_live hl_edit");
 				$('#qt'+id).find('.btn_delete').show();
@@ -594,7 +593,7 @@ const Q = {
 			   l = "livedata > ld[title='" + id +"']";
              let n = 1;
 		if($("#bu"+id).hasClass('hl_missing')){
-			Q.au('delete.mp3');
+			Q.au.delete.play();
 			a.remove();
 			$('a'+l+', '+'b'+l).remove();
 		}else{
@@ -708,7 +707,7 @@ const Q = {
 			data:{id: id, tokenoflove: token, date: date},
 			dataType: "text",
 			success: function(data){
-				Q.au('delete.mp3');
+				Q.au.delete.play();
 				Q.safes(id,true);
 			}
 		});},
@@ -726,7 +725,7 @@ const Q = {
 				      b = $('#qt'+id),
 				      a = 'allsave',
 				      c = $('all');
-				Q.au('delete.mp3');
+				Q.au.delete.play();
 				if(save == 1){
 					if(c.find(a).length == 0){
 					   c.append(`<${a}></${a}>`);
@@ -755,7 +754,7 @@ const Q = {
 				dataType: "text",
 				success: function(data){
 					//console.log('Deleted:'+id);
-					Q.au('delete.mp3');
+					Q.au.delete.play();
 					if(b.parent()[0].tagName !== "ALLSAVE"){
 						Q.qt_onerow(id,0);
 						$('#safes'+id).remove();
@@ -848,9 +847,7 @@ const Q = {
 				if(any_missing !== 0){Q.qt_newrows(send);}
 			}
 		});},
-		au(fi){
-			new Audio('r/sound/'+fi).play();
-		}};
+		au: {}};
 
 
 /*Activate all the buttons, load the inmenu and get local storage, start to detect changes and load all recent.*/
@@ -861,11 +858,11 @@ Q.first_load();
 
 
 /*Add ACE editor to the inmenu*/
-
+let im;
 $(document).ready(()=>{
 	//console.log('Main menu editor');
 
-	const imf = $("#qt"),
+	const imf = $("#qt");
 		  im = ace.edit("editor");
 	im.setTheme(def_theme);
 	im.getSession().setMode("ace/mode/html");
@@ -874,7 +871,6 @@ $(document).ready(()=>{
 		Q.inmenu_changed();
 	});
 	im.getSession().setUseWrapMode(true);
-	im.getSession().setUseWorker(false);
 	im.setOptions({
 		fontSize: "16px",
 		enableBasicAutocompletion: true,
@@ -888,6 +884,32 @@ $(document).ready(()=>{
 	 im.setValue(html);
 
     Q.ctrl_enter('inmenu');
+
+
+const menu = document.querySelector('.menu');
+const toggleMenu = command => {
+  menu.style.display = command === "show" ? "block" : "none";
+};
+
+const setPosition = ({ top, left }) => {
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
+  toggleMenu('show');
+};
+
+document.addEventListener("click", e => {toggleMenu()});
+
+document.querySelector('#editor').addEventListener("dblclick", e => {
+  e.preventDefault();
+  const origin = {
+    left: e.pageX,
+    top: e.pageY
+  };
+  setPosition(origin);
+  return false;
+});
+
+
 });
 
 /*Add ACE editor to all the code blocks*/
@@ -913,7 +935,7 @@ $('qt_menu').children('.editor').each(function(index){
 /*Toggle the inmenu*/
 $('#btn_min').click(()=>{
 	//console.log('#btn_min click');
-	Q.au('slide.mp3');
+	Q.au.slide.play();
 	let t, b, cl, o, w, mb;
 	const bm = $('#btn_min'),
 		  d = $(document);
@@ -934,7 +956,7 @@ $('#btn_min').click(()=>{
 /*Toggle the encryption input field (depends on the size of the screen)*/
 $(dec_trigg).click(()=>{
 	//console.log(dec_trigg);
-	Q.au('slide.mp3');
+	Q.au.slide.play();
 	let w,p,h,m,w2,p2,ml;
 	const
 		v = ':visible',
@@ -1003,9 +1025,8 @@ $('.send_btn').click(function(){
 
 	/*add the audio files to pre-load*/
 	const a = ['delete.mp3','edit.mp3','got.wav','here.wav','other.mp3','send.mp3','slide.mp3'];
-	let b = '';
-	for(const value of a){ b += `<source src="r/sound/${value}"		type="audio/${value.split('.')[1]}">`;}
-	$('body').prepend(`<audio preload="auto">${b}</audio>`);
+	for(const value of a){Q.au[value.split('.')[0]] = new Audio('r/sound/'+value);}
+
 
 
 	/*Timer that triggers the refresh*/
