@@ -7,9 +7,9 @@ $qMarks = str_repeat('?,', count($pages) - 1) . '?';
 $done   = array();
 
 $stmt 	= $pdo->prepare("
-	SELECT 	id, first_name, last_name, LastUpdated
-	FROM 	tbl_sample
-	WHERE 	`last_name`
+	SELECT 	id, html_blob, page_name, last_updated
+	FROM 	html_tbl
+	WHERE 	`page_name`
 	IN 		($qMarks)
 	ORDER BY id ASC");
 $stmt->execute($pages);
@@ -29,20 +29,20 @@ if($save_mode){
 $stmt = $pdo->prepare("
 	SELECT reorder.*
 	FROM (
-		SELECT 		ID, first_name, last_name, LastUpdated
-		FROM 		tbl_safe
-		ORDER BY 	LastUpdated DESC)
+		SELECT 		save_id, html_blob, page_name, last_updated
+		FROM 		save_tbl
+		ORDER BY 	last_updated DESC)
 	AS reorder
-	WHERE `last_name`
+	WHERE `page_name`
 	IN ($qMarks)
-	GROUP BY `ID`
-	ORDER BY ID ASC LIMIT 100");
+	GROUP BY `save_id`
+	ORDER BY save_id ASC LIMIT 100");
 
 $stmt->execute($pages);
 if ($stmt->rowCount() > 0){
 	$check = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach($check as $encoded) {
-		if(!in_array($encoded["ID"], $done)){
+		if(!in_array($encoded["save_id"], $done)){
 			$decoded = str_replace($unreadable, $readable, $encoded);
 			include 'r/php/items.php';
 		}

@@ -6,9 +6,9 @@ if(isset($page)){		$pages = explode(',',$page);
 
 $qMarks = str_repeat('?,', count($pages) - 1) . '?';
 $stmt = $pdo->prepare("
-	SELECT 	LastUpdated, id
-	FROM 	tbl_sample
-	WHERE 	`last_name`
+	SELECT 	last_updated, id
+	FROM 	html_tbl
+	WHERE 	`page_name`
 	IN 		($qMarks)
 	ORDER BY id ASC");
 
@@ -17,7 +17,7 @@ if ($stmt->rowCount() > 0){
 	$check = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach($check as $row) {
 		$output .= '
-	<ld title="'.$row["id"].'">'.substr($row["LastUpdated"],11,8).'</ld>';
+	<ld title="'.$row["id"].'">'.substr($row["last_updated"],11,8).'</ld>';
 	}
 }
 ?>

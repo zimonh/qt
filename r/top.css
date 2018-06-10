@@ -12,7 +12,7 @@
 .icon-ar-r,
 .icon-home,
 .icon-return,
-.icon-safes,
+.icon-saves,
 .icon-save{fill:white;}
 
 .icon-key,
@@ -53,7 +53,7 @@ textarea.qt,
 #s_encr_btn,
 preload,
 qt_menu,
-all_safes,
+all_saves,
 enc,
 live,
 scrupt,
@@ -78,7 +78,7 @@ recent>button,
 buttons>button,
 inmenu>button,
 qt_menu>button,
-safes>button{
+saves>button{
 	background-color:#272822;
 	border:none;
 	border-radius:4px;
@@ -94,7 +94,7 @@ safes>button{
 buttons	>button:active,
 inmenu	>button:active,
 qt_menu	>button:active,
-safes	>button:active{
+saves	>button:active{
 	box-shadow:#a59525 0 1px;
 	top:2px;
 }
@@ -103,8 +103,8 @@ safes	>button:active{
 buttons	>button:focus,
 inmenu	>button:focus,
 qt_menu	>button:focus,
-safes	>button:focus,
-input.namesafe_input:focus,
+saves	>button:focus,
+input.namesave_input:focus,
 #page:focus,
 #encr_input:focus,
 .page_input:focus{
@@ -114,7 +114,7 @@ recent	>button>svg,
 buttons	>button>svg,
 inmenu	>button>svg,
 qt_menu	>button>svg,
-safes	>button>svg{
+saves	>button>svg{
 	height:17px;
 	width:17px;
 }
@@ -172,12 +172,12 @@ qt_menu{
 	overflow:hidden;
 	text-align:left;}
 
-safes{
+saves{
 	display:inline-block;
 	margin:4px;}
 
 
-all_safes{
+all_saves{
 	margin:-5px 0 10px 0;
 	max-height:0;
 	overflow:hidden;
@@ -186,7 +186,7 @@ all_safes{
 	  -o-transition:max-height 0.4s ease-in-out;
 		 transition:max-height 0.4s ease-in-out;}
 
-.all_safes_show{max-height:100vh;}
+.all_saves_show{max-height:100vh;}
 
 
 buttons{
@@ -257,7 +257,7 @@ inmenu{
 	position:fixed;
 	right:0;
 	text-align:left;
-	z-index:99999999;}
+	z-index:199999;}
 
 #page.page_warning{background-color:red;}
 .qt_show,
@@ -265,7 +265,7 @@ inmenu{
 
 
 /*inputs*/
-input.namesafe_input,
+input.namesave_input,
 #page,
 #encr_input,
 .page_input{
@@ -296,12 +296,12 @@ buttons>form{display:inline-block;}
 
 
 
-input.namesafe_input,
+input.namesave_input,
 input.page_input,
 button.btn_encryptit,
 button.btn_refresh,
 button.btn_edit,
-button.namesafe_btn{
+button.namesave_btn{
 
 	margin-right:6px;
 }
@@ -373,13 +373,13 @@ div.ace_autocomplete{width:160px;}
 	position:fixed;
 	z-index:99999999;}
 
-input.namesafe_input{width:115px;}
+input.namesave_input{width:115px;}
 
-.namesafe_btn{
+.namesave_btn{
 	padding:4px 0;
 	width:0;}
 
-.namesafe_btn>svg{width:0;}
+.namesave_btn>svg{width:0;}
 
 
 
@@ -435,7 +435,7 @@ allsave>qt>button.qt_btn{
 		float:unset;
 		margin-left:unset;}
 
-	.btn_safess{margin-right:6px;}
+	.btn_savess{margin-right:6px;}
 
 	.small_r,
 	.small_l,

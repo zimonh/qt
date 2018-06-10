@@ -2,13 +2,13 @@
 const def_theme = "ace/theme/monokai",
 	def_theme_class = "ace-monokai",
 	page = window.location.pathname.substring(1),
-	token = '24c2y3qt2hbccccca3$@';
+	user_key = '24c2y3qt2hbccccca3$@';
 
 let	send_mode_enc,
 	resetcountdown = false,
 	menu_height = '345px';
 
-/*Detect if in safe mode*/
+/*Detect if in save mode*/
 if(window.location.href.slice(-2) =="?!"){
 	save_mode = true;
 	let notifi = page;
@@ -66,13 +66,13 @@ const Q = {
 
 			for(const value of f){
 				if(value.substring(0, 19)  !== a[3]){
-					s += `<safes safes_date="${value.substring(0, 19).replace(" ", "_")}">${t}Rename safe" class="namesafe_btn" >${ic('pencil')+u+i}Safe name" class="namesafe_input${p+value.substring(5, 19)}" value="${value.slice(19)}">${t}View safe" class="getsafe_btn">${ic('eye')+u}</safes>`;
+					s += `<saves saves_date="${value.substring(0, 19).replace(" ", "_")}">${t}Rename save" class="namesave_btn" >${ic('pencil')+u+i}Save name" class="namesave_input${p+value.substring(5, 19)}" value="${value.slice(19)}">${t}View save" class="getsave_btn">${ic('eye')+u}</saves>`;
 				}
 			}
 
 			if(a[2] !== '' && a[3] !== a[2].slice(0, -1)){
 				if(save_mode){ d = t+`Delete All Saves" ${b}delete_all">${ic('trash')+u}`; }
-				h = `<button title="History" ${b}safess">${ic('safes')+u}`;
+				h = `<button title="History" ${b}savess">${ic('saves')+u}`;
 			}
 
 			const l = a[0];
@@ -91,7 +91,7 @@ const Q = {
 						});
 					<\/script>
 				</qt_menu>
-				<all_safes id="safes${l}">${s}</all_safes>`;
+				<all_saves id="saves${l}">${s}</all_saves>`;
 
 			$('#bu'+l).after(r);
 
@@ -118,11 +118,11 @@ const Q = {
 			'.qt_btn',
 			'.btn_edit',
 			'.btn_encryptit',
-			'.btn_safess',
+			'.btn_savess',
 			'.btn_delete',
 			'.btn_refresh',
-			'.getsafe_btn',
-			'.namesafe_btn',
+			'.getsave_btn',
+			'.namesave_btn',
 			'.btn_delete_all'
 		],c='click.reset';
 
@@ -131,15 +131,15 @@ const Q = {
 
 		$(b[0]).on(c,function(){Q.edit_menu(this);});
 		$(b[1]+', '+b[2]).on(c,function(){Q.edit(this);});
-		$(b[3]).on(c,function(){Q.safes_menu(this);});
+		$(b[3]).on(c,function(){Q.saves_menu(this);});
 		$(b[4]).on(c,function(){Q.deleter(this);});
 		$(b[5]).on(c,function(){Q.refresh(this);});
-		$(b[6]).on(c,function(){Q.getsafe(this);});
-		$(b[7]).on(c,function(){Q.namesafe(this);});
-		$(b[8]).on(c,function(){Q.delete_all_safes(this);});
+		$(b[6]).on(c,function(){Q.getsave(this);});
+		$(b[7]).on(c,function(){Q.namesave(this);});
+		$(b[8]).on(c,function(){Q.delete_all_saves(this);});
 		Q.ctrl_enter('qt_menu');
 		Q.changes('qt_menu .ace_text-input');
-		Q.changes('.namesafe_input');},
+		Q.changes('.namesave_input');},
 
 	/*Function that triggers on first load calls all the on triggers, get local storage, start to detect changes and load all recent.*/
 	first_load(){
@@ -198,7 +198,7 @@ const Q = {
 
 		/*dont know.. its one of the input fields but witch one..*/
 		if($(e).parent().attr('id') === undefined){
-			Q.toggle_safe(e,false);
+			Q.toggle_save(e,false);
 		}else{
 
 			const editor = $(e).parent().attr('id');
@@ -240,11 +240,11 @@ const Q = {
 		$(s)			.animate({width:w2,padding:p},	y);
 		$(b)			.animate({width:w2,padding:p},	y);},
 
-	/*Toggle the safe button showing and hiding the safe input field.*/
-	toggle_safe(e,send){
+	/*Toggle the save button showing and hiding the save input field.*/
+	toggle_save(e,send){
 		const t=100,
-			  g='.getsafe_btn',
-			  n='.namesafe_btn',
+			  g='.getsave_btn',
+			  n='.namesave_btn',
 			  y={duration:100,queue:false};
 		let w,w2,_w;
 		if($(e).val() && !send){	w='17px';	w2='27px';	_w='0';		_w2='0';
@@ -277,12 +277,12 @@ const Q = {
 	/*If there is a script in the live edit block it by replacing the script tags.*/
 	script_detected(html){
 		let replaced = false;
-		html = html.replace(/<script/g, function(token){replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
+		html = html.replace(/<script/g, function(user_key){replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
 		if(replaced){//console.log('script_detected - Press Ctrl to activate');
 		}
 		return html;},
 
-	/*Safe the inmenu text in local storage and show it live on the page.*/
+	/*Save the inmenu text in local storage and show it live on the page.*/
 	inmenu_changed(){
 		//console.log('inmenu_changed');
 		const html = Q.script_detected($('#qt').val());
@@ -314,7 +314,7 @@ const Q = {
 		const id = $(e).attr('id').substring(2),
 			  d = 'display',
 			  b = 'block',
-			  s = '#safes'+id,
+			  s = '#saves'+id,
 			  q = '#qt'+id,
 			  r = $(q);
 		let cl;
@@ -324,8 +324,8 @@ const Q = {
 					cl = 0;
 					$(q+', '+s).hide();
 					$(e).attr('clicked', 0);
-					r.find('.btn_safess').attr('clicked', 0);
-					$(s).removeClass('all_safes_show').removeAttr('style');
+					r.find('.btn_savess').attr('clicked', 0);
+					$(s).removeClass('all_saves_show').removeAttr('style');
 				}
 			});
 		}else{
@@ -341,12 +341,12 @@ const Q = {
 		}
 		$(e).attr('clicked', cl);},
 
-	/*Toggle the safes menu triggered by the history button.*/
-	safes_menu(e){
-		//console.log('safes_menu');
+	/*Toggle the saves menu triggered by the history button.*/
+	saves_menu(e){
+		//console.log('saves_menu');
 		Q.au.slide.play();
-		const id = $('#safes' + $(e).parent().attr('id').substring(2)),
-			a = 'all_safes_show';
+		const id = $('#saves' + $(e).parent().attr('id').substring(2)),
+			a = 'all_saves_show';
 		let	cl;
 		if($(e).attr('clicked') == 1){
 			cl = 0;
@@ -377,7 +377,7 @@ const Q = {
 				${b}Encrypt" ${c}encryptit">${ic('pin-lock')+u+b}Pin" ${c}edit">${ic('pin')+u}<input title="Page" ${v}page_input" id="page${l}" value="${$('#page').val()}" placeholder="home"/>${b}Refresh" ${c}refresh">${ic('refresh')+u+b}Delete" ${c}delete">${ic('trash')+u}<textarea id="tahtml${l}" ${v}qt">${data}</textarea>
 				<div id="editor${l}" ${v}editor">${data}</div>
 			</qt_menu>
-			<all_safes id="safes${l}"></all_safes>
+			<all_saves id="saves${l}"></all_saves>
 			<script>
 				const q${l}=ace.edit("editor${l}"),
 					 qf${l}=$("textarea[id=tahtml${l}");
@@ -401,7 +401,7 @@ const Q = {
 		$('#bu'+id).removeClass(h);
 		$('#qt'+id).find('.btn_delete').show();
 		if(type){
-			$('#safes'+id).find('.getsafe_btn').removeClass(h);
+			$('#saves'+id).find('.getsave_btn').removeClass(h);
 			$('a'+l).html($('b'+l).html());
 			Q.checker();
 		}},
@@ -418,7 +418,7 @@ const Q = {
 			}
 		});},
 
-	/*Add this row to the safes and update the live data.*/
+	/*Add this row to the saves and update the live data.*/
 	qt_saverow(id){
 		//console.log('qt_saverow '+id);
 		$.ajax({
@@ -431,32 +431,32 @@ const Q = {
 			}
 		});},
 
-	/*Load a safe*/
-	getsafe(e){
-		//console.log('getsafe');
+	/*Load a save*/
+	getsave(e){
+		//console.log('getsave');
 		const p = $(e).parent(),
-			  date = p.attr('safes_date').replace(/_/g,' '),
+			  date = p.attr('saves_date').replace(/_/g,' '),
 			  id = p.parent().attr('id').substring(5),
 			  h = 'hl_live';
 		$.ajax({
-			url: "r/ajax/qt_safe.php",
+			url: "r/ajax/qt_save.php",
 			method: "POST",
 			data:{date: date},
 			dataType: "text",
 			success: function(data){
 				Q.single_row(id,data,false);
-				p.parent().find('.getsafe_btn').removeClass(h);
+				p.parent().find('.getsave_btn').removeClass(h);
 				$(e).addClass('hl_live');
 			}
 		});},
 
-	/*Name a safe and send it to the qt server*/
-	namesafe(e){
-		//console.log('namesafe');
+	/*Name a save and send it to the qt server*/
+	namesave(e){
+		//console.log('namesave');
 		const p = $(e).parent(),
-			  date 	= p.attr('safes_date').replace(/_/g,' '),
+			  date 	= p.attr('saves_date').replace(/_/g,' '),
 			  id 	= p.parent().parent().find('tq').attr('id').substring(4),
-			  n 	= '.namesafe_input',
+			  n 	= '.namesave_input',
 			  name 	= p.find(n).val();
 		$.ajax({
 			url: "r/ajax/qt_name.php",
@@ -464,7 +464,7 @@ const Q = {
 			data:{date: date, name: name},
 			dataType: "text",
 			success: function(data){
-				Q.toggle_safe(p.find(n),true);
+				Q.toggle_save(p.find(n),true);
 			}
 		});},
 
@@ -509,7 +509,7 @@ const Q = {
 		$.ajax({
 			url: "r/ajax/insert.php",
 			method: "POST",
-			data:{ tokenoflove: token, html: html, page: new_page},
+			data:{ user_key: user_key, html: html, page: new_page},
 			dataType: "text",
 			success: function(data){
 				localStorage.setItem("inmenu",'');
@@ -566,7 +566,7 @@ const Q = {
 		$.ajax({
 			url: "r/ajax/edit.php",
 			method: "POST",
-			data:{id: id, page: new_page, html: html, tokenoflove: token},
+			data:{id: id, page: new_page, html: html, user_key: user_key},
 			dataType: "text",
 			success: function(data){
 				/*Go to the right page*/
@@ -574,7 +574,7 @@ const Q = {
 					window.location.href = '/'+ new_page.replace(/ /g,"_");
 					return false;
 				}
-				Q.safes(id,false);
+				Q.saves(id,false);
 				$('#html'+id).html($('#tahtml'+id).val());
 				Q.au.here.play();
 				$('a'+l+', '+'b'+l).html(data);
@@ -601,11 +601,11 @@ const Q = {
 			Q.qt_onerow(id,n);
 		}},
 
-	/*Get the latest safes or cleans safes if none are left.*/
-	safes(id,del){
-		//console.log('safess');
+	/*Get the latest saves or cleans saves if none are left.*/
+	saves(id,del){
+		//console.log('savess');
 		$.ajax({
-			url: "r/ajax/safes.php",
+			url: "r/ajax/saves.php",
 			method: "POST",
 			data:{id: id},
 			dataType: "text",
@@ -613,30 +613,30 @@ const Q = {
 				let result = '';
 				const b = '<button title="',
 					  u = '</button>',
-					  s = $('#safes'+id),
+					  s = $('#saves'+id),
 					  i = $('#qt'+id),
 					  t = $('#bu'+id);
 				data = data.split("~");
 				data.pop();
 				for(const value of data){
 					result += `
-					<safes safes_date="${value.substring(0, 19).replace(" ", "_")}">
-					${b}Rename safe" class="namesafe_btn">${ic('pencil')+u}<input title="Safe name" class="namesafe_input" placeholder="${value.substring(5, 19)}" value="${value.slice(19)}">${b}View safe" class="getsafe_btn">${ic('eye')+u}</safes>`;}
+					<saves saves_date="${value.substring(0, 19).replace(" ", "_")}">
+					${b}Rename save" class="namesave_btn">${ic('pencil')+u}<input title="Save name" class="namesave_input" placeholder="${value.substring(5, 19)}" value="${value.slice(19)}">${b}View save" class="getsave_btn">${ic('eye')+u}</saves>`;}
 				s.html(result);
-				if(i.find('.btn_safess').length == 0){
-				   i.find('.btn_refresh').after(b+`History" class="btn_safess">${ic('safes')+u}`);
+				if(i.find('.btn_savess').length == 0){
+				   i.find('.btn_refresh').after(b+`History" class="btn_savess">${ic('saves')+u}`);
 				}
 				Q.all_triggers();
 
 				if(del){
 					//console.log("delete save");
 
-					if(s.find('safes').length > 0){
+					if(s.find('saves').length > 0){
 						Q.qt_saverow(id);
 						//show latest data and make sure save is cool.
-						const newest_save = i.parent().find('all_safes safes')[0];
+						const newest_save = i.parent().find('all_saves saves')[0];
 						newest_save.remove();
-						t.attr('title',$(newest_save).attr('safes_date'));
+						t.attr('title',$(newest_save).attr('saves_date'));
 
 						//console.log('delete_save some saves are left');
 					}else{
@@ -649,7 +649,7 @@ const Q = {
 							//console.log('no ALLSAVE');
 							Q.qt_onerow(id,0);
 							s.remove();
-							i.find('.btn_safess').remove();
+							i.find('.btn_savess').remove();
 							i.find('.btn_delete_all').remove();
 						}else{
 							//console.log('in ALLSAVE!');
@@ -665,16 +665,16 @@ const Q = {
 		const id = $(e).parent().attr('id').substring(2),
 			  t = $('#qt'+id).parent(),
 			  p = t.parent().prop('nodeName') === 'ALL',
-			  s = $('#safes'+id);
+			  s = $('#saves'+id);
 
 		if( !$('#bu'+id).hasClass('hl_live') &&	s.find('.hl_live').length === 1){
-			const date = s.find('.hl_live').parent().attr('safes_date').replace(/_/g," ");
+			const date = s.find('.hl_live').parent().attr('saves_date').replace(/_/g," ");
 			//console.log('delete_selected_save');
 			Q.delete_save(id,date);
 		}else{
 
 			if(save_mode){
-				if(p && s.find('safes').length === 0){
+				if(p && s.find('saves').length === 0){
 					//console.log('delete for ever');
 					Q.delete_(id,1,0);
 				}else{
@@ -682,7 +682,7 @@ const Q = {
 						//console.log('simple destroy');
 						Q.delete_(id,1,1);
 						Q.qt_saverow(id);
-						t.find('all_safes safes')[0].remove();
+						t.find('all_saves saves')[0].remove();
 					}else{
 						Q.delete_save(id,0);
 						//console.log('delete oldest save');
@@ -699,16 +699,16 @@ const Q = {
 
 		}},
 
-	/*Delete the oldest safe???*/
+	/*Delete the oldest save???*/
 	delete_save(id,date){
 		$.ajax({
 			url: "r/ajax/delete_save.php",
 			method: "POST",
-			data:{id: id, tokenoflove: token, date: date},
+			data:{id: id, user_key: user_key, date: date},
 			dataType: "text",
 			success: function(data){
 				Q.au.delete.play();
-				Q.safes(id,true);
+				Q.saves(id,true);
 			}
 		});},
 
@@ -717,7 +717,7 @@ const Q = {
 		$.ajax({
 			url: "r/ajax/delete.php",
 			method: "POST",
-			data:{id: id, tokenoflove: token, destroy: destroy},
+			data:{id: id, user_key: user_key, destroy: destroy},
 			dataType: "text",
 			success: function(data){
 				//console.log('Deleted:'+id);
@@ -741,24 +741,24 @@ const Q = {
 			}
 		});},
 
-	/*Delete all the safes with this number.*/
-	delete_all_safes(e){
+	/*Delete all the saves with this number.*/
+	delete_all_saves(e){
 		const id = $(e).parent().attr('id').substring(2),
 			  b = $('#bu'+id).parent();
-		//console.log('Delete_all_safes:'+id);
+		//console.log('Delete_all_saves:'+id);
 	    if(confirm("Are you sure you want to delete all save?")){
 	    	$.ajax({
 				url: "r/ajax/delete_saves.php",
 				method: "POST",
-				data:{id: id, tokenoflove: token},
+				data:{id: id, user_key: user_key},
 				dataType: "text",
 				success: function(data){
 					//console.log('Deleted:'+id);
 					Q.au.delete.play();
 					if(b.parent()[0].tagName !== "ALLSAVE"){
 						Q.qt_onerow(id,0);
-						$('#safes'+id).remove();
-						$('#qt'+id).find('.btn_safess').remove();
+						$('#saves'+id).remove();
+						$('#qt'+id).find('.btn_savess').remove();
 					}else{
 						b.remove();
 					}
@@ -886,6 +886,9 @@ $(document).ready(()=>{
     Q.ctrl_enter('inmenu');
 
 
+
+/* duble click menu**/
+/*
 const menu = document.querySelector('.menu');
 const toggleMenu = command => {
   menu.style.display = command === "show" ? "block" : "none";
@@ -908,9 +911,11 @@ document.querySelector('#editor').addEventListener("dblclick", e => {
   setPosition(origin);
   return false;
 });
-
+*/
 
 });
+
+
 
 /*Add ACE editor to all the code blocks*/
 $('qt_menu').children('.editor').each(function(index){

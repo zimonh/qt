@@ -1,6 +1,6 @@
-<?php  
+<?php
 
-include '../connect/token.php';
+include '../connect/users.php';
 
 if($status === "1"){
 
@@ -17,12 +17,12 @@ if($status === "1"){
 	$page = preg_replace("/( )/","_",$page);
 
 
-	$stmt = $pdo->prepare("INSERT INTO tbl_safe SELECT ID, first_name, last_name, LastUpdated, @temp_var, @temp_var FROM tbl_sample WHERE id = :id");
+	$stmt = $pdo->prepare("INSERT INTO save_tbl SELECT save_id, html_blob, page_name, last_updated, @temp_var, @temp_var FROM html_tbl WHERE id = :id");
 	$stmt->bindParam(':id',$id, PDO::PARAM_INT);
 	$stmt->execute();
 
 
-	$stmt = $pdo->prepare("UPDATE tbl_sample SET first_name = :html , last_name = :page  WHERE id = :id");
+	$stmt = $pdo->prepare("UPDATE html_tbl SET html_blob = :html , page_name = :page  WHERE id = :id");
 	$stmt->bindParam(':id',$id, PDO::PARAM_INT);
 	$stmt->bindParam(':html',$html, PDO::PARAM_STR);
 	$stmt->bindParam(':page',$page, PDO::PARAM_STR);
@@ -33,5 +33,5 @@ if($status === "1"){
 
 
 }
- 
+
 ?>
