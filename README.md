@@ -35,5 +35,5 @@ And alow three users to acces the databse with the follow permissions:
 __You can find the link to the .ini files in the 3 connect files.__
 
 ## License
-copyright - ZIMONH 2018
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br>
+Copyright - ZIMONH 2018
