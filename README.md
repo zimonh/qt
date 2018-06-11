@@ -3,6 +3,9 @@ qt is a platform where you can share and run blocks of code.
 - You can create new pages and open multiple blocks like this: qt.zimonh.at/page1,page2
 - All changes are tracked so you get live __inserts__ notification of __updates, and deletes__ as others make changes.
 - And changes and deletes are stored in a save place.
+- re run <scipt> in a block using ctrl-enter.
+- share encrpted blocks
+- create un-indexed pages by adding __secret__ in the page name.
 
 ## Example
 <img src="https://blog.zimonh.at/wp-content/uploads/2018/06/qt_sceen.jpg"/>
