@@ -6,6 +6,7 @@ qt is a platform where you can share and run blocks of code.
 
 ## Example
 <img src="https://blog.zimonh.at/wp-content/uploads/2018/06/qt_sceen.jpg"/>
+
 ## Before Setup
 Make sure you have the ability to:
 - Run PHP,
