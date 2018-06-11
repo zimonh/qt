@@ -1,5 +1,5 @@
 # qt
-Live Content Management System for HTML
+Live Modular Content Management System for HTML
 
 ## Before Setup
 Make sure you have the ability to:
@@ -9,7 +9,9 @@ Make sure you have the ability to:
 - Add users to your database.
 
 ## Setup
-### Import the two .SQL files in your database system. 
+### Creating the database.
+1. Go to the phpMyAdmin staring page and choose SQL
+2. Paste the data from the two .sql files.
 
 ### Manage Access
 The passwords are stored outside of the public folder in .ini files, in the following form:
@@ -20,18 +22,18 @@ un = 'Jonh45'
 pw = 'Pasword123'
 db = 'qt_db'
 ```
-You can find the pays in the links in ein the 3 connect files
-
-There are 3 files you have to create 
+There are 3 of these files you have to create 
 - __insert.ini__, (Has full power to insert edit and delete)
 - __select.ini__ and  (Has limited power to select)
 - __users.ini__ (Can access the Databse with permision tokens)
 
-And alow three users to acces teh databse with the follow permissions:
+And alow three users to acces the databse with the follow permissions:
 - qt_inse: SELECT, INSERT, DELETE, and UPDATE in qt_db
 - qt_sele: SELECT in qt_db
 - qt_user: SELECT in qt_users_db
 
-## Creating the database.
-1. Go to the phpMyAdmin staring page and choose SQL
-2. Paste the data from the Setup.sql file.
+__You can find the link to the .ini files in the 3 connect files.__
+
+## License
+copyright - ZIMONH 2018
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
