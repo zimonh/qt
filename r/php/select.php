@@ -1,6 +1,6 @@
 <?php
-$output =
-'<all>';
+
+if($clean_mode){ $output = '';}else{ $output = '<all>';}
 
 $pages 	= explode(',',$page);
 $qMarks = str_repeat('?,', count($pages) - 1) . '?';
@@ -53,13 +53,16 @@ $output .= '
 </allsave>';
 }
 
+if(!$clean_mode){
+$output .= "\n</all>";
 
-$output .= '
-</all>';
 echo $output.'
 <inmenu_result></inmenu_result>
 <script>
 const qt_buttons = "'.$output2.'";';
 unset($output);
-include 'r/php/recent.php';
+include 'r/php/recent.php';}else{
+
+echo $output;
+}
 ?>

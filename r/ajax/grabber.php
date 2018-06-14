@@ -1,7 +1,7 @@
 <?php
-	$id = $_POST["id"];
-	$href = $_POST["href"];
-	$adjust = $_POST["adjust"];
+	$id = $_GET["id"];
+	$href = $_GET["href"];
+	$adjust = $_GET["adjust"];
 /* gets the data from a URL */
 function get_data($href) {
 	$ch = curl_init();

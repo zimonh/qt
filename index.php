@@ -1,13 +1,16 @@
 <?php
 /********Set develop modus********/
 $d = '';
-$d = '?'.date("Y.m.d.h.m.s");
+//$d = '?'.date("Y.m.d.h.m.s");
 
 /********uses the .htacces file to redirect and set the page variable********/
 $page = (isset($_GET['p']) ? $_GET['p'] : null);
 
 //triggerd with ?! at the end of url
 if(isset($_GET['!'])){$save_mode = true;}else{$save_mode = false;};
+
+//triggerd with ?$ at the end of url
+if(isset($_GET['@'])){$clean_mode = true;}else{$clean_mode = false;};
 
 preg_match("/^[A-Za-z0-9,' .\-]+$/i", $page);
 
@@ -21,5 +24,8 @@ include 'r/connect/insert.php';
 include 'r/php/translation.php';
 include 'r/php/top.php';
 include 'r/php/select.php';
-include 'r/php/bottom.php';
+if($clean_mode){echo "</body>\n</html>";}else{include 'r/php/bottom.php';}
+
+
+
 ?>
