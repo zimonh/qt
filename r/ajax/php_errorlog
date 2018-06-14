@@ -23,3 +23,8 @@ Stack trace:
 #0 /home/zimonh53/public_html/qt/r/ajax/qt_save.php(6): PDOStatement->execute()
 #1 {main}
   thrown in /home/zimonh53/public_html/qt/r/ajax/qt_save.php on line 6
+[14-Jun-2018 11:36:06 CST6CDT] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'save_id' in 'field list'' in /home/zimonh53/public_html/qt/r/ajax/delete.php:15
+Stack trace:
+#0 /home/zimonh53/public_html/qt/r/ajax/delete.php(15): PDOStatement->execute()
+#1 {main}
+  thrown in /home/zimonh53/public_html/qt/r/ajax/delete.php on line 15
