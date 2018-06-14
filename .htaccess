@@ -16,8 +16,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^\s\/]+)/([^\s\/]+)/?$ index.php?p=$1&r [L,QSA]
 
-
-
 <IfModule mod_expires.c>
 ExpiresActive On
 ExpiresByType image/jpg "access 1 month"
@@ -79,6 +77,3 @@ ExpiresDefault "access 1 month"
 order allow,deny
 allow from all
 </Files>
-
-deny from 68.119.55.221
-deny from 66.249.69.250
