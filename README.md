@@ -2,10 +2,14 @@
 qt is a platform where you can share and run blocks of code.
 - You can create new pages and open multiple blocks like this: qt.zimonh.at/page1,page2
 - All changes are tracked so you get live __inserts__ notification of __updates, and deletes__ as others make changes.
-- And changes and deletes are stored in a save place.
-- Re-run scipt in a block using ctrl-enter.
-- Share encrpted blocks
+- And changes and deletes are stored in a safe place.
+- Re-run script in a block using ctrl-enter.
+- Share encrypted blocks
 - Create un-indexed pages by adding __secret__ in the page name.
+
+## Tips
+- Add __?!__ at the end of an URL to open it without scripts.
+- Add __?@__ at the end of an URL to open the page without buttons or the __qt__ script. (this disables the decryption)
 
 ## Example
 <img src="https://blog.zimonh.at/wp-content/uploads/2018/06/qt_sceen.jpg"/>
@@ -13,7 +17,7 @@ qt is a platform where you can share and run blocks of code.
 ## Before Setup
 Make sure you have the ability to:
 - Run PHP,
-- Use SQL  (comminication with the database is done with [PDO](http://php.net/manual/en/intro.pdo.php).)
+- Use SQL  (communication with the database is done with [PDO](http://php.net/manual/en/intro.pdo.php).)
 - Access a folder outside of the /public.
 - Add users to your database.
 
@@ -34,9 +38,9 @@ db = 'qt_db'
 There are 3 of these files you have to create 
 - __insert.ini__, (Has full power to insert edit and delete)
 - __select.ini__ and  (Has limited power to select)
-- __users.ini__ (Can access the Databse with permision tokens)
+- __users.ini__ (Can access the Database with permission tokens)
 
-And alow three users to acces the databse with the follow permissions:
+And allow three users to access the database with the following permissions:
 - qt_inse: SELECT, INSERT, DELETE, and UPDATE in qt_db
 - qt_sele: SELECT in qt_db
 - qt_user: SELECT in qt_users_db
