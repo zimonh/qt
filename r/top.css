@@ -88,6 +88,7 @@ saves>button{
 	line-height:0;
 	padding:3px 5px;
 	position:relative;
+	z-index: 10;
 }
 
 .qt_btn:active,
@@ -158,6 +159,7 @@ preloady{
 .editor{
 	height:300px;
 	margin:5px 0;
+	z-index:10;
 }
 
 #editor{
@@ -181,10 +183,12 @@ all_saves{
 	margin:-5px 0 10px 0;
 	max-height:0;
 	overflow:hidden;
+	position: relative;
  -webkit-transition:max-height 0.4s ease-in-out;
 	-moz-transition:max-height 0.4s ease-in-out;
 	  -o-transition:max-height 0.4s ease-in-out;
-		 transition:max-height 0.4s ease-in-out;}
+		 transition:max-height 0.4s ease-in-out;
+	z-index: 10;}
 
 .all_saves_show{max-height:100vh;}
 

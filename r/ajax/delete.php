@@ -8,7 +8,7 @@ if($status === "1"){
 	if($_POST["destroy"] == 0){
 		$stmt = $pdo->prepare("
 			INSERT INTO save_tbl
-			SELECT save_id, html_blob, page_name, last_updated, @temp_var, @temp_var
+			SELECT id, html_blob, page_name, last_updated, @temp_var, @temp_var
 			FROM html_tbl
 			WHERE id = :id");
 		$stmt->bindParam(':id',$id, PDO::PARAM_INT);

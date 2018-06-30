@@ -42,17 +42,43 @@ if($_SESSION["origin"]){
 	foreach(iterator_to_array($dom->getElementsByTagName('link'  )) as $node){
 	    $node->parentNode->removeChild($node);};
 
+
+
+
+
+
+
 	if(isset($id) && $id !== ''){
-	$elm=$dom->getElementById($id);}else{
-		$elm=$dom;
-	}//this will output DOMElement Object
+
+		$ElementType = $id[0];
+
+		if($ElementType === '#'||$ElementType === '.'){$id = substr($id, 1);}
+
+		//first char
+		if($ElementType !=='#' && $ElementType !== '.' || $ElementType === '#'){
+
+			$elm=$dom->getElementById($id);
+			$str  = $dom->saveHtml($elm);
+
+		}else if($ElementType === '.'){
+			$tmp_dom = new DOMDocument();
+			$elms = $domx->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $id ')]");
+			foreach($elms as $node){
+					$tmp_dom->appendChild($tmp_dom->importNode($node,true));
+			}
+			$str = trim($tmp_dom->saveHTML());
+		}
+
+	}else{
+		$elm = $dom;
+		$str = $dom->saveHtml($elm);
+	}
 
 	$tag = $elm->tagName;
 	$cnt = $elm->nodeValue;
-	//replace src="/ with src="$href/
 
 
-	$str  = $dom->saveHtml($elm);
+
 	if($adjust ==='yes'){
 	if(parse_url($href)["host"] === "www.youtube.com"){
 
