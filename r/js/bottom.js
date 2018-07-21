@@ -22,7 +22,7 @@ const Q = {
 
 	/*Main menu at bottom*/
 	inmenu(){
-		//console.log('inmenu');
+		console.log('inmenu');
 		const part_p = page.split(','), b = '<button title="', u = '</button>', c = '" class="', i='" id="', t = 'imp_toggle>', g = '_button big_', s = '_button small_';
 		const menu = `${b}Show/Hide menu${i}btn_min">add content${u}<textarea id="qt"></textarea><div id="editor"></div><buttons>${b}Send Encrypted${i}send_encrypted" style="display: inline-block;${c}send_btn">${ic('send-lock')+u+b}Send${i}send_raw${c}send_btn">${ic('send')+u}<input placeholder="page${i}page" value="${part_p[0]}">${b}Show/Hide edit buttons${i}hide_btn">${ic('eye-red')+u+b}Encrypt${i}encr_btn${c}decrypt_btn">${ic('lock')+u}<form id="encr_input_form"><input type="password${i}encr_input" autocomplete="new-password"></form>${b}Scroll left${c}left${g}l">${ic('ar-l')+u+b}Scroll right${c}right${g}r">${ic('ar-r')+u+b}Save mode${c}save${g}s">${ic('save')+u+b}Home${c}home${g}h">${ic('home')+u}</buttons><${t}</${t}<recent>${b}Scroll left${c}left${s}l">${ic('ar-l')+u}<r_out><r_in></r_in></r_out>${b}Scroll right${c}right${s}r">${ic('ar-r')+u+b}Save mode${c}save${s}s">${ic('save')+u+b}Home${c}home${s}h">${ic('home')+u}</recent>`;
 		$('inmenu').html(menu);},
@@ -31,7 +31,7 @@ const Q = {
 	all_recent(){
 		let su = '';
 		if(save_mode){su = '?!';}
-		//console.log('all_recent');
+		console.log('all_recent');
 		let re = recenty.split(","); re.pop();
 		let	result = '';
 		for(const value of re){result += `<a href="`+value+su+`">`+value+`</a> `;}
@@ -96,9 +96,9 @@ const Q = {
 
         }},
 
-    /*The button linking to the save page*/
+	/*The button linking to the save page*/
 	save_btn(){
-		//console.log('save_btn');
+		console.log('save_btn');
 		const s = $('.save_button');
 		if(save_mode){
 
@@ -112,7 +112,7 @@ const Q = {
 
 	/*All Button triggers that get refreshed with new content*/
 	all_triggers(){
-		//console.log('all_triggers');
+		console.log('all_triggers');
 		let b = [
 			'.qt_btn',
 			'.btn_edit',
@@ -136,17 +136,22 @@ const Q = {
 		$(b[6]).on(c,function(){Q.getsave(this);});
 		$(b[7]).on(c,function(){Q.namesave(this);});
 		$(b[8]).on(c,function(){Q.delete_all_saves(this);});
+
 		Q.ctrl_enter('qt_menu');
-		Q.changes('qt_menu .ace_text-input');
+
+		if(!save_mode) Q.changes('qt_menu .ace_text-input');
+
 		Q.changes('.namesave_input');},
 
 	/*Function that triggers on first load calls all the on triggers, get local storage, start to detect changes and load all recent.*/
 	first_load(){
-		//console.log('first_load');
+		console.log('first_load');
 		$('#qt').val(localStorage.getItem("inmenu"));
 		$(dec_input).val(localStorage.getItem("key"));
+
 		Q.changes(dec_input);
 		Q.changes('#page');
+
 		Q.save_btn();
 		$('.home_button').on('click',()=>{if(page!==''){window.location.href = "/";}});
 		Q.enc_length(true);
@@ -155,7 +160,7 @@ const Q = {
 
 	/*Universal function for detecting changes to text.*/
 	changes(el){
-		//console.log('changes');
+		console.log('changes');
 		const l = $(el);
 		/*detect delete, backspace, Ctrl z and Ctrl y*/
 		l.unbind('.reset');
@@ -217,7 +222,7 @@ const Q = {
 
 	/*Toggle encryption button showing and hiding the input field.*/
 	toggle_eb(m){
-		//console.log('toggle_eb');
+		console.log('toggle_eb');
 		const t =100,
 			  r =$('.small_r').is(":visible"),
 			  o = $('r_out'),
@@ -256,7 +261,7 @@ const Q = {
 
 	/*Test if the key is long enough and show a golden lock if it is.*/
 	enc_length(m){
-		//console.log('enc_length');
+		console.log('enc_length');
 		const b = $(dec_trigg),
 			  i = $(dec_input).val(),
 			  k = 'key';
@@ -277,13 +282,13 @@ const Q = {
 	script_detected(html){
 		let replaced = false;
 		html = html.replace(/<script/g, function(user_key){replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
-		if(replaced){//console.log('script_detected - Press Ctrl to activate');
+		if(replaced){console.log('script_detected - Press Ctrl to activate');
 		}
 		return html;},
 
 	/*Save the inmenu text in local storage and show it live on the page.*/
 	inmenu_changed(){
-		//console.log('inmenu_changed');
+		console.log('inmenu_changed');
 		const html = Q.script_detected($('#qt').val());
 		localStorage.setItem("inmenu",html);
 		$('inmenu_result').html(html);},
@@ -295,7 +300,7 @@ const Q = {
 		a.keydown(function(e){
 			if(e.ctrlKey && e.keyCode == 13){
 
-				//console.log('ctrl_enter' + el);
+				console.log('ctrl_enter' + el);
 				if(el==i){
 					const html = $('#qt').val();
 					$(i+'_result').html(html);
@@ -308,7 +313,7 @@ const Q = {
 
 	/*Toggle the edit menu triggered by each code block button.*/
 	edit_menu(e){
-		//console.log('edit_menu');
+		console.log('edit_menu');
 		Q.au.slide.play();
 		const id = $(e).attr('id').substring(2),
 			  d = 'display',
@@ -334,15 +339,14 @@ const Q = {
 			let menu_heights = r.attr('data-height');
 			r.animate({height:menu_heights},{complete:()=>{
 				menu_heights = $('#editor'+id).height();
-				if(menu_heights>360){
-				r.animate({height:menu_heights+60+'px'});}
+				if(menu_heights>360) r.animate({height:menu_heights+60+'px'});
 			}});
 		}
 		$(e).attr('clicked', cl);},
 
 	/*Toggle the saves menu triggered by the history button.*/
 	saves_menu(e){
-		//console.log('saves_menu');
+		console.log('saves_menu');
 		Q.au.slide.play();
 		const id = $('#saves' + $(e).parent().attr('id').substring(2)),
 			a = 'all_saves_show';
@@ -358,15 +362,19 @@ const Q = {
 
 	/*Turns raw blocks into editable bocks by adding buttons input fields and scripts.*/
 	qt(data,id){
-		//console.log('qt');
+		console.log('qt');
 		/*make a function and add the string replace as a js file don't get any data in this case just use the info you posted*/
-		const	decoded = str_replace(data),
+
+		let	decoded = '';
+		const
 			b = '<button title="',
 			g = 'q'+id+'.getSession().',
 			v = 'class="',
 			c = v+'btn_',
 			l = id.trim(),
 			u = '</button>';
+
+		if(!save_mode) decoded = str_replace(data);
 		return `	<qt>
 			<tq id="html${l}">
 				${decoded}
@@ -374,7 +382,7 @@ const Q = {
 			<button id="bu${l}" ${v}qt_btn">${l+u}
 			<qt_menu id="qt${l}" data-height="${menu_height}">
 				${b}Encrypt" ${c}encryptit">${ic('pin-lock')+u+b}Pin" ${c}edit">${ic('pin')+u}<input title="Page" ${v}page_input" id="page${l}" value="${$('#page').val()}" placeholder="home"/>${b}Refresh" ${c}refresh">${ic('refresh')+u+b}Delete" ${c}delete">${ic('trash')+u}<textarea id="tahtml${l}" ${v}qt">${data}</textarea>
-				<div id="editor${l}" ${v}editor">${data}</div>
+				<div id="editor${l}" ${v}editor"></div>
 			</qt_menu>
 			<all_saves id="saves${l}"></all_saves>
 			<script>
@@ -390,11 +398,14 @@ const Q = {
 
 	/*Single row actions*/
 	single_row(id,data,type=true){
+		console.log('single_row');
 		eval("q"+id).setTheme(def_theme);
 		const decoded = str_replace(data),
-			  l = `livedata > ld[title='${id}']`,
-			  h = 'hl_live';
-		$('#html'+id).html(decoded);
+			l = `livedata > ld[title='${id}']`,
+			h = 'hl_live';
+
+		if(!save_mode) $('#html'+id).html(decoded);
+
 		eval("q"+id).setValue(decoded,-1);
 		Q.au.got.play();
 		$('#bu'+id).removeClass(h);
@@ -407,6 +418,7 @@ const Q = {
 
 	/*get one block of code and update the live data.*/
 	qt_onerow(id,save){
+		console.log('qt_onerow');
 		$.ajax({
 			url: "r/ajax/qt_onerow.php",
 			method: "POST",
@@ -419,7 +431,7 @@ const Q = {
 
 	/*Add this row to the saves and update the live data.*/
 	qt_saverow(id){
-		//console.log('qt_saverow '+id);
+		console.log('qt_saverow '+id);
 		$.ajax({
 			url: "r/ajax/qt_saverow.php",
 			method: "POST",
@@ -432,7 +444,7 @@ const Q = {
 
 	/*Load a save*/
 	getsave(e){
-		//console.log('getsave');
+		console.log('getsave');
 		const p = $(e).parent(),
 			  date = p.attr('saves_date').replace(/_/g,' '),
 			  id = p.parent().attr('id').substring(5),
@@ -451,7 +463,7 @@ const Q = {
 
 	/*Name a save and send it to the qt server*/
 	namesave(e){
-		//console.log('namesave');
+		console.log('namesave');
 		const p = $(e).parent(),
 			  date 	= p.attr('saves_date').replace(/_/g,' '),
 			  id 	= p.parent().parent().find('tq').attr('id').substring(4),
@@ -469,7 +481,7 @@ const Q = {
 
 	/*Get rows based on missing from live data*/
 	qt_newrows(send){
-		//console.log('qt_newrows');
+		console.log('qt_newrows');
 		let ids = '';
 		$("alivedata ld").each(function(index){
 			ids += $(this).attr("title").trim()+',';
@@ -488,7 +500,7 @@ const Q = {
 				for(const value of data){
 					const onedata = value.split("$");
 					result += Q.qt(onedata[2], onedata[0]);
-					//console.log('appended to a');
+					console.log('appended to a');
 					$('alivedata').append(`			<ld title="${onedata[0]}">${onedata[1].trim()}</ld>\n`);}
 
 				Q.checker(send,true);
@@ -500,7 +512,7 @@ const Q = {
 
 	/*Upload encrypted or regular new HTML to qt server and update live data.*/
 	sendit(){
-		//console.log('sendit');
+		console.log('sendit');
 		let html = $('#qt').val().trim();
 		const new_page = $('#page').val().trim();
 		Q.au.send.play();
@@ -521,7 +533,7 @@ const Q = {
 				Q.au.here.play();
 				$('all').append(Q.qt(html, onedata[0]));
 				$('alivedata, blivedata').append(`			<ld title="${onedata[0]}">${onedata[1].trim()}</ld>\n`);
-				//console.log('Sended: '+onedata[0]);
+				console.log('Sended: '+onedata[0]);
 				Q.checker(false,true);
 				$('inmenu_result').remove();
 				$('all').after('<inmenu_result></inmenu_result>');
@@ -532,14 +544,14 @@ const Q = {
 
 	/*Convert HTML into a encrypted block that can be decrypted later.*/
 	encryption_block(html){
-		//console.log('encryption_block');
+		console.log('encryption_block');
 		const key = $(dec_input).val(),
 			  date = new Date().valueOf();
 		return  `<enc id="AESd${date}">${CryptoJS.AES.encrypt(html ,key)}</enc><script>AESd('${date}');<\/script>`;},
 
 	/*Edit the current block and send encrypted or regular version to qt server and update live data.*/
 	edit(e){
-		//console.log('edit');
+		console.log('edit');
 		const id 		= $(e).parent().attr('id').substring(2),
 			  l 		= `livedata>ld[title='${id}']`,
 			  i			= 'q'+id,
@@ -574,7 +586,9 @@ const Q = {
 					return false;
 				}
 				Q.saves(id,false);
-				$('#html'+id).html($('#tahtml'+id).val());
+				if(!save_mode) $('#html'+id).html($('#tahtml'+id).val());
+
+
 				Q.au.here.play();
 				$('a'+l+', '+'b'+l).html(data);
 				$('#bu'+id).removeClass("hl_live hl_edit");
@@ -586,7 +600,7 @@ const Q = {
 
 	/*Get latest version of this code block.*/
 	refresh(e){
-		//console.log('refresh');
+		console.log('refresh');
 		const id = $(e).parent().attr('id').substring(2),
 			   a = $('#qt'+id).parent(),
 			   l = "livedata > ld[title='" + id +"']";
@@ -602,7 +616,7 @@ const Q = {
 
 	/*Get the latest saves or cleans saves if none are left.*/
 	saves(id,del){
-		//console.log('savess');
+		console.log('savess');
 		$.ajax({
 			url: "r/ajax/saves.php",
 			method: "POST",
@@ -628,7 +642,7 @@ const Q = {
 				Q.all_triggers();
 
 				if(del){
-					//console.log("delete save");
+					console.log("delete save");
 
 					if(s.find('saves').length > 0){
 						Q.qt_saverow(id);
@@ -637,21 +651,21 @@ const Q = {
 						newest_save.remove();
 						t.attr('title',$(newest_save).attr('saves_date'));
 
-						//console.log('delete_save some saves are left');
+						console.log('delete_save some saves are left');
 					}else{
-						//console.log('delete_save no saves left');
+						console.log('delete_save no saves left');
 						if($('.qt_btn').length < 2){
 							$('a[href="'+page+'?!"]').remove();
-							//console.log('removed page from recent');
+							console.log('removed page from recent');
 						}
 						if(t.parent().parent()[0].tagName !== "ALLSAVE"){
-							//console.log('no ALLSAVE');
+							console.log('no ALLSAVE');
 							Q.qt_onerow(id,0);
 							s.remove();
 							i.find('.btn_savess').remove();
 							i.find('.btn_delete_all').remove();
 						}else{
-							//console.log('in ALLSAVE!');
+							console.log('in ALLSAVE!');
 							t.parent().remove();
 						}
 					}
@@ -668,31 +682,31 @@ const Q = {
 
 		if( !$('#bu'+id).hasClass('hl_live') &&	s.find('.hl_live').length === 1){
 			const date = s.find('.hl_live').parent().attr('saves_date').replace(/_/g," ");
-			//console.log('delete_selected_save');
+			console.log('delete_selected_save');
 			Q.delete_save(id,date);
 		}else{
 
 			if(save_mode){
 				if(p && s.find('saves').length === 0){
-					//console.log('delete for ever');
+					console.log('delete for ever');
 					Q.delete_(id,1,0);
 				}else{
 					if(p){
-						//console.log('simple destroy');
+						console.log('simple destroy');
 						Q.delete_(id,1,1);
 						Q.qt_saverow(id);
 						t.find('all_saves saves')[0].remove();
 					}else{
 						Q.delete_save(id,0);
-						//console.log('delete oldest save');
+						console.log('delete oldest save');
 					}
 				}
 			}else{
-				//console.log('delete and backup');
+				console.log('delete and backup');
 				Q.delete_(id,0,0);
 				if($('.qt_btn').length < 2){
 					$('a[href="'+page+'"]').remove();
-					//console.log('removed page from recent');
+					console.log('removed page from recent');
 				}
 			}
 
@@ -719,7 +733,7 @@ const Q = {
 			data:{id: id, user_key: user_key, destroy: destroy},
 			dataType: "text",
 			success: function(data){
-				//console.log('Deleted:'+id);
+				console.log('Deleted:'+id);
 				const l = "livedata > ld[title='"+id+"']",
 				      b = $('#qt'+id),
 				      a = 'allsave',
@@ -744,7 +758,7 @@ const Q = {
 	delete_all_saves(e){
 		const id = $(e).parent().attr('id').substring(2),
 			  b = $('#bu'+id).parent();
-		//console.log('Delete_all_saves:'+id);
+		console.log('Delete_all_saves:'+id);
 	    if(confirm("Are you sure you want to delete all save?")){
 	    	$.ajax({
 				url: "r/ajax/delete_saves.php",
@@ -752,7 +766,7 @@ const Q = {
 				data:{id: id, user_key: user_key},
 				dataType: "text",
 				success: function(data){
-					//console.log('Deleted:'+id);
+					console.log('Deleted:'+id);
 					Q.au.delete.play();
 					if(b.parent()[0].tagName !== "ALLSAVE"){
 						Q.qt_onerow(id,0);
@@ -768,7 +782,7 @@ const Q = {
 
 	/*Get the live data so later it can be compared.*/
 	ld(m){
-		//console.log('ld');
+		console.log('ld');
 		$.ajax({
 			url: "r/ajax/ld.php",
 			method: "POST",
@@ -788,7 +802,7 @@ const Q = {
 
 	/*Detect differences in the latest version of the page and the version now active.*/
 	checker(send=false,emptytest=false){
-		//console.log('checker');
+		console.log('checker');
 		//makes it possible to post when the page is empty
 		const l  = $("blivedata ld").length,
 		 	  ld = "livedata > ld[title='",
@@ -859,16 +873,19 @@ Q.first_load();
 /*Add ACE editor to the inmenu*/
 let im;
 $(document).ready(()=>{
-	//console.log('Main menu editor');
+	console.log('Main menu editor');
 
 	const imf = $("#qt");
-		  im = ace.edit("editor");
+		im = ace.edit("editor");
 	im.setTheme(def_theme);
 	im.getSession().setMode("ace/mode/html");
-	im.getSession().on("change", ()=>{
-		imf.val(im.getSession().getValue());
-		Q.inmenu_changed();
-	});
+
+	if(!save_mode){
+		im.getSession().on("change", ()=>{
+			imf.val(im.getSession().getValue());
+			Q.inmenu_changed();
+		});
+	}
 	im.getSession().setUseWrapMode(true);
 	im.setOptions({
 		fontSize: "16px",
@@ -880,9 +897,9 @@ $(document).ready(()=>{
 	});
 	let html = $('#qt').val();
 	html = html.replace(/<scrupt/gi, '<script').replace(/<\/scrupt/gi, '<\/script');
-	 im.setValue(html);
+	im.setValue(html);
 
-    Q.ctrl_enter('inmenu');
+	if(!save_mode){Q.ctrl_enter('inmenu');}
 
 
 
@@ -938,7 +955,7 @@ $('qt_menu').children('.editor').each(function(index){
 
 /*Toggle the inmenu*/
 $('#btn_min').click(()=>{
-	//console.log('#btn_min click');
+	console.log('#btn_min click');
 	Q.au.slide.play();
 	let t, b, cl, o, w, mb;
 	const bm = $('#btn_min'),
@@ -959,7 +976,7 @@ $('#btn_min').click(()=>{
 
 /*Toggle the encryption input field (depends on the size of the screen)*/
 $(dec_trigg).click(()=>{
-	//console.log(dec_trigg);
+	console.log(dec_trigg);
 	Q.au.slide.play();
 	let w,p,h,m,w2,p2,ml;
 	const
@@ -1005,7 +1022,7 @@ $(dec_trigg).click(()=>{
 
 /*Toggle the buttons next to each code block*/
 $('#hide_btn').click(()=>{
-	//console.log('#hide_btn');
+	console.log('#hide_btn');
 	const s = $('styleholder'),
 		  h = $('#hide_btn');
 	if(s.html() == ""){
@@ -1018,7 +1035,7 @@ $('#hide_btn').click(()=>{
 
 /*Send html block to qt server*/
 $('.send_btn').click(function(){
-	//console.log('.send_btn');
+	console.log('.send_btn');
 	if($(this).attr('id') === 'send_encrypted'){send_mode_enc = true;}else{send_mode_enc = false;}
 	const html = $('#qt').val().trim();
 	if(html === ""){return false;}
