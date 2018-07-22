@@ -25,11 +25,11 @@
 	include 'r/php/top.php';
 	include 'r/php/select.php';
 	if($clean_mode){
-		echo "</body>\n</html>";
+		echo "\n</body>\n</html>";
 	}else{
 		echo "\n<live>";
 		include 'r/php/livedata.php';
-		echo "\n<styleholder></styleholder>\n</live>\n</body>\n</html>";
+		echo "\n<styleholder></styleholder>\n<styleholder2><style>html,body{background-color:#1d1d1d;}</style></styleholder2>\n</live>\n</body>\n</html>";
 	}
 
 
