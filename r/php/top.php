@@ -15,16 +15,15 @@ $dep = '
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-language_tools.js" 	integrity="sha256-kb+/UeeIJQwoiinEYqlY7FqMXtgKpULdLvQ560OE3i4=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9/crypto-js.min.js"	integrity="sha256-u6BamZiW5tCemje2nrteKC2KoLIKX9lKPSpvCkOhamw=" crossorigin="anonymous"></script>
 	<script src="r/js/top.js'.$d.'"></script>
-
-
-	';
-
+	<script src="r/js/bottom.js'.$d.'"></script>';
 $inmenu = "<inmenu></inmenu>\n";
 }
 echo '<!DOCTYPE html>
 <html>
 <head>
 	<title>'.$t.'</title>'.$dep.'
+
+
 	<link rel="icon" type="image/png" href="zh.ico">
 </head>
 <body style="margin-bottom:40px;">

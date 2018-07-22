@@ -168,7 +168,10 @@ preloady{
 	height:150px;
 	margin-bottom:4px;}
 
+all_saves,qt_menu{min-width: 94vw;}
+
 qt_menu{
+
 	height:0;
 	margin-top:10px;
 	overflow:hidden;

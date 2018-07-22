@@ -1,21 +1,14 @@
-const def_theme = "ace/theme/monokai",
-	def_theme_class = "ace-monokai",
+const def_theme = 'ace/theme/monokai',
+	def_theme_class = 'ace-monokai',
 	page = window.location.pathname.substring(1),
-	user_key = '24c2y3qt2hbccccca3$@';
+	user_key = '24c2y3qt2hbccccca3$@',
+	ic = n => `<svg class="icon-${n}"><use xlink:href="r/icons.svg#icon-${n}"></use></svg>`;
 
 let	send_mode_enc,
 	resetcountdown = false,
-	menu_height = '345px';
+	menu_height = '345px',
+	save_mode = false;
 
-/*Detect if in save mode*/
-if(window.location.href.slice(-2) =="?!"){
-	save_mode = true;
-	let notifi = page;
-	if(notifi===''){notifi = 'Home';}
-	$('body').addClass('save_mode').prepend(`<div class="intro">In this version of the ${notifi} page no html will run and you can view and permanently delete saves.</div>`);}else{save_mode = false;}
-
-/*Global icon function*/
-ic = n => `<svg class="icon-${n}"><use xlink:href="r/icons.svg#icon-${n}"></use></svg>`;
 
 /*the Q object that creates a block around all the functions*/
 const Q = {
@@ -30,13 +23,13 @@ const Q = {
 	/*The list of all recent pages and in save mode all the hidden pages*/
 	all_recent(){
 		let su = '';
-		if(save_mode){su = '?!';}
+		if(save_mode) su = '?!';
 		console.log('all_recent');
-		let re = recenty.split(","); re.pop();
+		let re = recenty.split(','); re.pop();
 		let	result = '';
-		for(const value of re){result += `<a href="`+value+su+`">`+value+`</a> `;}
-		if(result.trim().length===0){	$('r_out, r_in, .left_button, .right_button').remove();
-		}else{							$('r_in').html(result);}
+		for(const value of re){result += `<a href="${value+su}">${value}</a> `;}
+		if(result.trim().length===0)	$('r_out, r_in, .left_button, .right_button').remove();
+		else							$('r_in').html(result);
 
 		$(document).ready(()=>{
 			const o = $('r_out'),	m = 20, s = 800, b = '_button';
@@ -49,36 +42,30 @@ const Q = {
 	all_buttons(){
 
 		const c = 'class="',
-			  b = c+'btn_',
-			  t = '<button title="',
-			  g = '.getSession().',
-			  u = '</button>',
-			  p = '" placeholder="',
-			  i = '<input title="',
-			  datu = qt_buttons.split("*"); datu.pop();
+			b = c+'btn_',
+			t = '<button title="',
+			g = '.getSession().',
+			u = '</button>',
+			p = '" placeholder="',
+			i = '<input title="',
+			datu = qt_buttons.split('*'); datu.pop();
 
 
-        for(const value of datu){
+		for(const value of datu){
 			let r = '', d='', s='', e='', h='',
-				a =	value.split("$"),
-				f = a[2].split("~"); f.pop();
+				a =	value.split('$'),
+				f = a[2].split('~'); f.pop();
 
-			for(const value of f){
-				if(value.substring(0, 19)  !== a[3]){
-					s += `<saves saves_date="${value.substring(0, 19).replace(" ", "_")}">${t}Rename save" class="namesave_btn" >${ic('pencil')+u+i}Save name" class="namesave_input${p+value.substring(5, 19)}" value="${value.slice(19)}">${t}View save" class="getsave_btn">${ic('eye')+u}</saves>`;
-				}
-			}
+			for(const value of f) if(value.substring(0, 19)  !== a[3]) s += `<saves saves_date="${value.substring(0, 19).replace(' ', '_')}">${t}Rename save" class="namesave_btn" >${ic('pencil')+u+i}Save name" class="namesave_input${p+value.substring(5, 19)}" value="${value.slice(19)}">${t}View save" class="getsave_btn">${ic('eye')+u}</saves>`;
 
 			if(a[2] !== '' && a[3] !== a[2].slice(0, -1)){
-				if(save_mode){ d = t+`Delete All Saves" ${b}delete_all">${ic('trash')+u}`; }
+				if(save_mode) d = t+`Delete All Saves" ${b}delete_all">${ic('trash')+u}`;
 				h = `<button title="History" ${b}savess">${ic('saves')+u}`;
 			}
 
 			const l = a[0];
 
-			if($('#bu'+l).parent().parent()[0].tagName !== 'ALLSAVE'){
-				e += t+`Encrypt" ${b}encryptit">${ic('pin-lock')+u+t}Pin" ${b}edit">${ic('pin')+u}`;
-			}
+			if($('#bu'+l).parent().parent()[0].tagName !== 'ALLSAVE') e += t+`Encrypt" ${b}encryptit">${ic('pin-lock')+u+t}Pin" ${b}edit">${ic('pin')+u}`;
 
 			r += `<qt_menu id="qt${l}" data-height="${menu_height}">${e+i}Page" ${c}page_input" id="page${l}" value="${a[1]+p}"home"/>${t}Refresh" ${b}refresh"> ${ic('refresh')+u+h+t}Delete" ${b}delete">${ic('trash')+u+d}<textarea id="tahtml${l}" class="qt"></textarea>
 					<div id="editor${l}" ${c}editor"></div>
@@ -94,39 +81,37 @@ const Q = {
 
 			$('#bu'+l).after(r);
 
-        }},
+		}},
 
 	/*The button linking to the save page*/
 	save_btn(){
 		console.log('save_btn');
 		const s = $('.save_button');
 		if(save_mode){
-
 			s.html(ic('return'));
-			s.attr('title', 'Return');
-		}
+			s.attr('title', 'Return');}
 		s.on('click',()=>{
-			if(save_mode){	window.location.href = window.location.href.slice(0,-2);
-			}else{			window.location.href = page+"?!";}
+			if(save_mode)	window.location.href = window.location.href.slice(0,-2);
+			else			window.location.href = page+'?!';
 		});},
 
 	/*All Button triggers that get refreshed with new content*/
 	all_triggers(){
 		console.log('all_triggers');
 		let b = [
-			'.qt_btn',
-			'.btn_edit',
-			'.btn_encryptit',
-			'.btn_savess',
-			'.btn_delete',
-			'.btn_refresh',
-			'.getsave_btn',
-			'.namesave_btn',
-			'.btn_delete_all'
-		],c='click.reset';
+				'.qt_btn',
+				'.btn_edit',
+				'.btn_encryptit',
+				'.btn_savess',
+				'.btn_delete',
+				'.btn_refresh',
+				'.getsave_btn',
+				'.namesave_btn',
+				'.btn_delete_all'
+			],c='click.reset';
 
 		/*allows all triggers to be reset*/
-		$(b.join(', ')).unbind(".reset");
+		$(b.join(', ')).unbind('.reset');
 
 		$(b[0]).on(c,function(){Q.edit_menu(this);});
 		$(b[1]+', '+b[2]).on(c,function(){Q.edit(this);});
@@ -137,23 +122,23 @@ const Q = {
 		$(b[7]).on(c,function(){Q.namesave(this);});
 		$(b[8]).on(c,function(){Q.delete_all_saves(this);});
 
-		Q.ctrl_enter('qt_menu');
-
-		if(!save_mode) Q.changes('qt_menu .ace_text-input');
+		if(!save_mode){
+			Q.ctrl_enter('qt_menu');
+			Q.changes('qt_menu .ace_text-input');}
 
 		Q.changes('.namesave_input');},
 
 	/*Function that triggers on first load calls all the on triggers, get local storage, start to detect changes and load all recent.*/
 	first_load(){
 		console.log('first_load');
-		$('#qt').val(localStorage.getItem("inmenu"));
-		$(dec_input).val(localStorage.getItem("key"));
+		$('#qt').val(localStorage.getItem('inmenu'));
+		$(dec_input).val(localStorage.getItem('key'));
 
 		Q.changes(dec_input);
 		Q.changes('#page');
 
 		Q.save_btn();
-		$('.home_button').on('click',()=>{if(page!==''){window.location.href = "/";}});
+		$('.home_button').on('click',()=>{if(page!=='') window.location.href = '/';});
 		Q.enc_length(true);
 		Q.all_recent();
 		Q.all_triggers();},
@@ -171,45 +156,31 @@ const Q = {
 		/*detect adding using keyboard*/
 		l.on('propertychange.reset input.reset', function(e){
 			let valueChanged = false;
-			if(e.type=='propertychange'){valueChanged = e.originalEvent.propertyName=='value';}else{valueChanged = true;}
-			if(valueChanged){Q.changed(this);}
+			if(e.type=='propertychange') valueChanged = e.originalEvent.propertyName=='value'; else valueChanged = true;
+			if(valueChanged) Q.changed(this);
 		});
 		/*detect paste and cut*/
 		l.on('paste.reset cut.reset',function(){Q.changed(this);});
 		/*detect dragging text*/
-		if(el == dec_input){
-			l.on("dragend.reset",()=>{
-				Q.changed(el);
-			});
-		}else{
-			l.parent().on("dragend.reset",function(){
-				Q.changed($(this).find('textarea'));
-			});
-		}},
+		if(el == dec_input)	l.on('dragend.reset',()=>{ Q.changed(el); });
+		else l.parent().on('dragend.reset',function(){ Q.changed($(this).find('textarea')); });
+	},
 
 	/*Triggers on change*/
 	changed(e){
 		if($(e).attr('id') == 'page'){
 			/*make sure the page name is valid only alphanumeric space and underscore.*/
 			const reg = /^[a-zA-Z0-9_ ]+$/g, w = 'page_warning', p = $('#page');
-			if( reg.test($('#page').val()) || $('#page').val() === ''){
-				p.removeClass(w);
-			}else{
-				p.addClass(w);
-			}
-
+			if( reg.test($('#page').val()) || $('#page').val() === '') p.removeClass(w);
+			else p.addClass(w);
 		}
 
 		/*dont know.. its one of the input fields but witch one..*/
-		if($(e).parent().attr('id') === undefined){
-			Q.toggle_save(e,false);
-		}else{
-
+		if($(e).parent().attr('id') === undefined)	Q.toggle_save(e,false);
+		else{
 			const editor = $(e).parent().attr('id');
-			if(editor == 'encr_input_form'){
-				/*encryption key*/
-				Q.enc_length(false);
-			}else{
+			if(editor == 'encr_input_form')	/*encryption key*/	Q.enc_length(false);
+			else{
 				/*all other editors*/
 				const id = editor.substring(6),
 					html = Q.script_detected($('#tahtml'+id).val());
@@ -224,11 +195,11 @@ const Q = {
 	toggle_eb(m){
 		console.log('toggle_eb');
 		const t =100,
-			  r =$('.small_r').is(":visible"),
-			  o = $('r_out'),
-			  s ='#send_encrypted',
-			  b ='.btn_encryptit';
-			  y ={duration:t,queue:false};
+			r = $('.small_r').is(':visible'),
+			o = $('r_out'),
+			s = '#send_encrypted',
+			b = '.btn_encryptit',
+			y = {duration:t,queue:false};
 		let	w,w2,p,l,ml,ml2;
 
 		if(m){		w='17px'; 	w2='27px'; 	p='3px 5px';	l='8px';	ml='35px'; 	ml2 = '0';
@@ -246,14 +217,14 @@ const Q = {
 
 	/*Toggle the save button showing and hiding the save input field.*/
 	toggle_save(e,send){
-		const t=100,
-			  g='.getsave_btn',
-			  n='.namesave_btn',
-			  y={duration:100,queue:false};
-		let w,w2,_w;
-		if($(e).val() && !send){	w='17px';	w2='27px';	_w='0';		_w2='0';
-		}else{						w='0'; 		w2='0'  ;	_w='17px';	_w2='27px'; $(e).removeClass('live_editor');}
-		pe = $(e).parent();
+		const g = '.getsave_btn',
+			n = '.namesave_btn',
+			y = {duration:100,queue:false},
+			pe = $(e).parent();
+		let w,w2,_w2;
+		if($(e).val() && !send){	w='17px';	w2='27px';	_w2='0';
+		}else{						w='0'; 		w2='0'  ;	_w2='27px'; $(e).removeClass('live_editor');}
+
 		pe.find(g)			.animate({width:_w2, padding:'4px 0'},y);
 		pe.find(g+'>svg')	.animate({width:_w2			 		},y);
 		pe.find(n)			.animate({width: w2, padding:'4px 0'},y);
@@ -263,34 +234,33 @@ const Q = {
 	enc_length(m){
 		console.log('enc_length');
 		const b = $(dec_trigg),
-			  i = $(dec_input).val(),
-			  k = 'key';
+			i = $(dec_input).val(),
+			k = 'key';
 
 		if(i.length > 5){Q.toggle_eb(true);
-			if(m){ b.html(ic('lock-gold'));
-			}else{
+			if(m) b.html(ic('lock-gold'));
+			else{
 				b.html(ic(k));
 				b.find('svg').css('fill','gold');
 				localStorage.setItem(k,i);
 			}
 		}else{Q.toggle_eb(false);
-			if(m){ b.html(ic('lock-red'));
-			}else{ b.html(ic(k));}
+			if(m)  b.html(ic('lock-red'));
+			else{ b.html(ic(k));}
 		}},
 
 	/*If there is a script in the live edit block it by replacing the script tags.*/
 	script_detected(html){
 		let replaced = false;
-		html = html.replace(/<script/g, function(user_key){replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
-		if(replaced){console.log('script_detected - Press Ctrl to activate');
-		}
+		html = html.replace(/<script/g,()=>{ replaced = true; return '<scrupt';}).replace(/<\/script/g, '<\/scrupt');
+		if(replaced) console.log('script_detected - Press Ctrl to activate');
 		return html;},
 
 	/*Save the inmenu text in local storage and show it live on the page.*/
 	inmenu_changed(){
 		console.log('inmenu_changed');
 		const html = Q.script_detected($('#qt').val());
-		localStorage.setItem("inmenu",html);
+		localStorage.setItem('inmenu',html);
 		$('inmenu_result').html(html);},
 
 	/*Pushes the raw script onto the page so it runs.*/
@@ -316,11 +286,11 @@ const Q = {
 		console.log('edit_menu');
 		Q.au.slide.play();
 		const id = $(e).attr('id').substring(2),
-			  d = 'display',
-			  b = 'block',
-			  s = '#saves'+id,
-			  q = '#qt'+id,
-			  r = $(q);
+			d = 'display',
+			b = 'block',
+			s = '#saves'+id,
+			q = '#qt'+id,
+			r = $(q);
 		let cl;
 		if($(e).attr('clicked') == 1){
 			$(q+', '+s).animate({height:'0'},{
@@ -399,14 +369,14 @@ const Q = {
 	/*Single row actions*/
 	single_row(id,data,type=true){
 		console.log('single_row');
-		eval("q"+id).setTheme(def_theme);
+		eval('q'+id).setTheme(def_theme);
 		const decoded = str_replace(data),
 			l = `livedata > ld[title='${id}']`,
 			h = 'hl_live';
 
 		if(!save_mode) $('#html'+id).html(decoded);
 
-		eval("q"+id).setValue(decoded,-1);
+		eval('q'+id).setValue(decoded,-1);
 		Q.au.got.play();
 		$('#bu'+id).removeClass(h);
 		$('#qt'+id).find('.btn_delete').show();
@@ -420,10 +390,10 @@ const Q = {
 	qt_onerow(id,save){
 		console.log('qt_onerow');
 		$.ajax({
-			url: "r/ajax/qt_onerow.php",
-			method: "POST",
+			url: 'r/ajax/qt_onerow.php',
+			method: 'POST',
 			data:{id: id, save: save},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				Q.single_row(id,data);
 			}
@@ -433,10 +403,10 @@ const Q = {
 	qt_saverow(id){
 		console.log('qt_saverow '+id);
 		$.ajax({
-			url: "r/ajax/qt_saverow.php",
-			method: "POST",
+			url: 'r/ajax/qt_saverow.php',
+			method: 'POST',
 			data:{id: id},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				Q.single_row(id,data);
 			}
@@ -446,14 +416,14 @@ const Q = {
 	getsave(e){
 		console.log('getsave');
 		const p = $(e).parent(),
-			  date = p.attr('saves_date').replace(/_/g,' '),
-			  id = p.parent().attr('id').substring(5),
-			  h = 'hl_live';
+			date = p.attr('saves_date').replace(/_/g,' '),
+			id = p.parent().attr('id').substring(5),
+			h = 'hl_live';
 		$.ajax({
-			url: "r/ajax/qt_save.php",
-			method: "POST",
+			url: 'r/ajax/qt_save.php',
+			method: 'POST',
 			data:{date: date},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				Q.single_row(id,data,false);
 				p.parent().find('.getsave_btn').removeClass(h);
@@ -465,16 +435,15 @@ const Q = {
 	namesave(e){
 		console.log('namesave');
 		const p = $(e).parent(),
-			  date 	= p.attr('saves_date').replace(/_/g,' '),
-			  id 	= p.parent().parent().find('tq').attr('id').substring(4),
-			  n 	= '.namesave_input',
-			  name 	= p.find(n).val();
+			date 	= p.attr('saves_date').replace(/_/g,' '),
+			n 	= '.namesave_input',
+			name 	= p.find(n).val();
 		$.ajax({
-			url: "r/ajax/qt_name.php",
-			method: "POST",
+			url: 'r/ajax/qt_name.php',
+			method: 'POST',
 			data:{date: date, name: name},
-			dataType: "text",
-			success: function(data){
+			dataType: 'text',
+			success: function(){
 				Q.toggle_save(p.find(n),true);
 			}
 		});},
@@ -483,22 +452,22 @@ const Q = {
 	qt_newrows(send){
 		console.log('qt_newrows');
 		let ids = '';
-		$("alivedata ld").each(function(index){
-			ids += $(this).attr("title").trim()+',';
+		$('alivedata ld').each(function(){
+			ids += $(this).attr('title').trim()+',';
 		});
 		ids = ids.slice(0,-1);
 		$.ajax({
-			url: "r/ajax/qt_newrows.php",
-			method: "POST",
+			url: 'r/ajax/qt_newrows.php',
+			method: 'POST',
 			data:{ ids: ids, page: page },
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				let result = '';
-				data = data.split("*");
+				data = data.split('*');
 				data.pop();
 
 				for(const value of data){
-					const onedata = value.split("$");
+					const onedata = value.split('$');
 					result += Q.qt(onedata[2], onedata[0]);
 					console.log('appended to a');
 					$('alivedata').append(`			<ld title="${onedata[0]}">${onedata[1].trim()}</ld>\n`);}
@@ -516,20 +485,20 @@ const Q = {
 		let html = $('#qt').val().trim();
 		const new_page = $('#page').val().trim();
 		Q.au.send.play();
-		if($(dec_input).val().trim() !== "" && send_mode_enc){html = Q.encryption_block(html);}
+		if($(dec_input).val().trim() !== '' && send_mode_enc) html = Q.encryption_block(html);
 		$.ajax({
-			url: "r/ajax/insert.php",
-			method: "POST",
+			url: 'r/ajax/insert.php',
+			method: 'POST',
 			data:{ user_key: user_key, html: html, page: new_page},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
-				localStorage.setItem("inmenu",'');
+				localStorage.setItem('inmenu','');
 				if(new_page!==page){
 					//uses php no cash so all content gets loaded
-					window.location.href = '/'+ new_page.replace(/ /g,"_");
+					window.location.href = '/'+ new_page.replace(/ /g,'_');
 					return false;
 				}
-				const onedata = data.split(",");
+				const onedata = data.split(',');
 				Q.au.here.play();
 				$('all').append(Q.qt(html, onedata[0]));
 				$('alivedata, blivedata').append(`			<ld title="${onedata[0]}">${onedata[1].trim()}</ld>\n`);
@@ -537,7 +506,7 @@ const Q = {
 				Q.checker(false,true);
 				$('inmenu_result').remove();
 				$('all').after('<inmenu_result></inmenu_result>');
-				ace.edit("editor").setValue('',-1);
+				ace.edit('editor').setValue('',-1);
 				Q.all_triggers();
 			}
 		});},
@@ -546,71 +515,70 @@ const Q = {
 	encryption_block(html){
 		console.log('encryption_block');
 		const key = $(dec_input).val(),
-			  date = new Date().valueOf();
-		return  `<enc id="AESd${date}">${CryptoJS.AES.encrypt(html ,key)}</enc><script>AESd('${date}');<\/script>`;},
+			date = new Date().valueOf();
+		return `<enc id="AESd${date}">${CryptoJS.AES.encrypt(html ,key)}</enc><script>AESd('${date}');<\/script>`;},
 
 	/*Edit the current block and send encrypted or regular version to qt server and update live data.*/
 	edit(e){
 		console.log('edit');
 		const id 		= $(e).parent().attr('id').substring(2),
-			  l 		= `livedata>ld[title='${id}']`,
-			  i			= 'q'+id,
-			  new_page 	= $('#page'+id).val(),
-			  enc_s		= $('#editor'+id).hasClass(def_theme_class);
+			l 			= `livedata>ld[title='${id}']`,
+			i			= 'q'+id,
+			new_page 	= $('#page'+id).val(),
+			enc_s		= $('#editor'+id).hasClass(def_theme_class);
 
-		let   html 		= $('#tahtml'+id).val().trim(),
-			  enc		= false;
+		let html 		= $('#tahtml'+id).val().trim(),
+			enc			= false;
 
-		if(html == ''){return false;}
+		if(html == '') return false;
 
 		//if you want to encrypt or unecrypt dont check for changes
-		if($(e).attr("class") === 'btn_encryptit' && !enc_s){
-			if(!$('#bu'+id).hasClass('hl_live')){return false;}}
+		if($(e).attr('class') === 'btn_encryptit' && !enc_s && !$('#bu'+id).hasClass('hl_live')) return false;
 
 		Q.au.edit.play();
 
-		if($(e).attr("class") === 'btn_encryptit'){
+		if($(e).attr('class') === 'btn_encryptit'){
 			html = Q.encryption_block(html);
 			enc = true;
 			eval(i).setTheme(dec_theme);
 		}
 		$.ajax({
-			url: "r/ajax/edit.php",
-			method: "POST",
+			url: 'r/ajax/edit.php',
+			method: 'POST',
 			data:{id: id, page: new_page, html: html, user_key: user_key},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				/*Go to the right page*/
 				if(!page.split(',').includes(new_page)){
-					window.location.href = '/'+ new_page.replace(/ /g,"_");
+					window.location.href = '/'+ new_page.replace(/ /g,'_');
 					return false;
 				}
 				Q.saves(id,false);
-				if(!save_mode) $('#html'+id).html($('#tahtml'+id).val());
 
+				if(!save_mode) $('#html'+id).html($('#tahtml'+id).val()+' ');
 
 				Q.au.here.play();
 				$('a'+l+', '+'b'+l).html(data);
-				$('#bu'+id).removeClass("hl_live hl_edit");
+				$('#bu'+id).removeClass('hl_live hl_edit');
 				$('#qt'+id).find('.btn_delete').show();
 				$('#editor'+id).removeClass('live_editor edit_editor');
-				if(enc){eval(i).setTheme(dec_theme);}
-				else{eval(i).setTheme(def_theme);}}
+				if(enc) eval(i).setTheme(dec_theme);
+				else eval(i).setTheme(def_theme);}
 		});},
 
 	/*Get latest version of this code block.*/
 	refresh(e){
 		console.log('refresh');
 		const id = $(e).parent().attr('id').substring(2),
-			   a = $('#qt'+id).parent(),
-			   l = "livedata > ld[title='" + id +"']";
-             let n = 1;
-		if($("#bu"+id).hasClass('hl_missing')){
+			a   = $('#qt'+id).parent(),
+			l   = `livedata > ld[title='${id}']`;
+		let n = 1;
+		if($('#bu'+id).hasClass('hl_missing')){
 			Q.au.delete.play();
 			a.remove();
 			$('a'+l+', '+'b'+l).remove();
 		}else{
-			if(a.parent().prop('nodeName') === 'ALL'){ n = 0; }
+			if(a.parent().prop('nodeName') === 'ALL') n = 0;
 			Q.qt_onerow(id,n);
 		}},
 
@@ -618,31 +586,30 @@ const Q = {
 	saves(id,del){
 		console.log('savess');
 		$.ajax({
-			url: "r/ajax/saves.php",
-			method: "POST",
+			url: 'r/ajax/saves.php',
+			method: 'POST',
 			data:{id: id},
-			dataType: "text",
+			dataType: 'text',
 			success: function(data){
 				let result = '';
 				const b = '<button title="',
-					  u = '</button>',
-					  s = $('#saves'+id),
-					  i = $('#qt'+id),
-					  t = $('#bu'+id);
-				data = data.split("~");
+					u = '</button>',
+					s = $('#saves'+id),
+					i = $('#qt'+id),
+					t = $('#bu'+id);
+				data = data.split('~');
 				data.pop();
 				for(const value of data){
 					result += `
-					<saves saves_date="${value.substring(0, 19).replace(" ", "_")}">
+					<saves saves_date="${value.substring(0, 19).replace(' ', '_')}">
 					${b}Rename save" class="namesave_btn">${ic('pencil')+u}<input title="Save name" class="namesave_input" placeholder="${value.substring(5, 19)}" value="${value.slice(19)}">${b}View save" class="getsave_btn">${ic('eye')+u}</saves>`;}
 				s.html(result);
-				if(i.find('.btn_savess').length == 0){
-				   i.find('.btn_refresh').after(b+`History" class="btn_savess">${ic('saves')+u}`);
-				}
+				if(i.find('.btn_savess').length == 0) i.find('.btn_refresh').after(b+`History" class="btn_savess">${ic('saves')+u}`);
+
 				Q.all_triggers();
 
 				if(del){
-					console.log("delete save");
+					console.log('delete save');
 
 					if(s.find('saves').length > 0){
 						Q.qt_saverow(id);
@@ -658,7 +625,7 @@ const Q = {
 							$('a[href="'+page+'?!"]').remove();
 							console.log('removed page from recent');
 						}
-						if(t.parent().parent()[0].tagName !== "ALLSAVE"){
+						if(t.parent().parent()[0].tagName !== 'ALLSAVE'){
 							console.log('no ALLSAVE');
 							Q.qt_onerow(id,0);
 							s.remove();
@@ -676,12 +643,12 @@ const Q = {
 	/*Triggered by the delete button.*/
 	deleter(e){
 		const id = $(e).parent().attr('id').substring(2),
-			  t = $('#qt'+id).parent(),
-			  p = t.parent().prop('nodeName') === 'ALL',
-			  s = $('#saves'+id);
+			t = $('#qt'+id).parent(),
+			p = t.parent().prop('nodeName') === 'ALL',
+			s = $('#saves'+id);
 
 		if( !$('#bu'+id).hasClass('hl_live') &&	s.find('.hl_live').length === 1){
-			const date = s.find('.hl_live').parent().attr('saves_date').replace(/_/g," ");
+			const date = s.find('.hl_live').parent().attr('saves_date').replace(/_/g,' ');
 			console.log('delete_selected_save');
 			Q.delete_save(id,date);
 		}else{
@@ -715,11 +682,11 @@ const Q = {
 	/*Delete the oldest save???*/
 	delete_save(id,date){
 		$.ajax({
-			url: "r/ajax/delete_save.php",
-			method: "POST",
+			url: 'r/ajax/delete_save.php',
+			method: 'POST',
 			data:{id: id, user_key: user_key, date: date},
-			dataType: "text",
-			success: function(data){
+			dataType: 'text',
+			success: function(){
 				Q.au.delete.play();
 				Q.saves(id,true);
 			}
@@ -728,27 +695,23 @@ const Q = {
 	/*Delete the active version of this code block.*/
 	delete_(id,destroy,save){
 		$.ajax({
-			url: "r/ajax/delete.php",
-			method: "POST",
+			url: 'r/ajax/delete.php',
+			method: 'POST',
 			data:{id: id, user_key: user_key, destroy: destroy},
-			dataType: "text",
-			success: function(data){
+			dataType: 'text',
+			success: function(){
 				console.log('Deleted:'+id);
-				const l = "livedata > ld[title='"+id+"']",
-				      b = $('#qt'+id),
-				      a = 'allsave',
-				      c = $('all');
+				const l = `livedata > ld[title='${id}']`,
+					b = $('#qt'+id),
+					a = 'allsave',
+					c = $('all');
 				Q.au.delete.play();
 				if(save == 1){
-					if(c.find(a).length == 0){
-					   c.append(`<${a}></${a}>`);
-					}
+					if(c.find(a).length == 0) c.append(`<${a}></${a}>`);
 					$('#bu'+id).parent().detach().appendTo(a);
 					b.find('.btn_encryptit').remove();
 					b.find('.btn_edit').remove();
-				}else{
-					b.parent().remove();
-				}
+				}else b.parent().remove();
 
 				$('a'+l+', '+'b'+l).remove();
 			}
@@ -757,18 +720,18 @@ const Q = {
 	/*Delete all the saves with this number.*/
 	delete_all_saves(e){
 		const id = $(e).parent().attr('id').substring(2),
-			  b = $('#bu'+id).parent();
+			b = $('#bu'+id).parent();
 		console.log('Delete_all_saves:'+id);
-	    if(confirm("Are you sure you want to delete all save?")){
-	    	$.ajax({
-				url: "r/ajax/delete_saves.php",
-				method: "POST",
+		if(confirm('Are you sure you want to delete all save?')){
+			$.ajax({
+				url: 'r/ajax/delete_saves.php',
+				method: 'POST',
 				data:{id: id, user_key: user_key},
-				dataType: "text",
-				success: function(data){
+				dataType: 'text',
+				success: function(){
 					console.log('Deleted:'+id);
 					Q.au.delete.play();
-					if(b.parent()[0].tagName !== "ALLSAVE"){
+					if(b.parent()[0].tagName !== 'ALLSAVE'){
 						Q.qt_onerow(id,0);
 						$('#saves'+id).remove();
 						$('#qt'+id).find('.btn_savess').remove();
@@ -778,18 +741,18 @@ const Q = {
 				}
 			});
 
-	    }},
+		}},
 
 	/*Get the live data so later it can be compared.*/
 	ld(m){
 		console.log('ld');
 		$.ajax({
-			url: "r/ajax/ld.php",
-			method: "POST",
+			url: 'r/ajax/ld.php',
+			method: 'POST',
 			data:{page: page},
 			success: function(data){
 				let result = '';
-				data = data.split(",");	data.pop();
+				data = data.split(',');	data.pop();
 				resetcountdown = true;
 				for(const value of data){
 					result += `			<ld title="${value.slice(8)}">${value.substring(0, 8)}</ld>\n`;}
@@ -798,34 +761,33 @@ const Q = {
 				}else{	Q.checker();}
 			}
 		});},
-		/* ENDGet latest dates */
 
 	/*Detect differences in the latest version of the page and the version now active.*/
 	checker(send=false,emptytest=false){
 		console.log('checker');
 		//makes it possible to post when the page is empty
-		const l  = $("blivedata ld").length,
-		 	  ld = "livedata > ld[title='",
-		 	  al = "a"+ld,
-		 	  bl = "b"+ld,
-		 	  hm = 'hl_missing',
-		 	  he = 'hl_edit',
-		 	  m  = 'hl_match',
-		 	  c  = he + " " + hm;
+		const l  = $('blivedata ld').length,
+			ld = "livedata > ld[title='",
+			al = 'a'+ld,
+			bl = 'b'+ld,
+			hm = 'hl_missing',
+			he = 'hl_edit',
+			m  = 'hl_match',
+			c  = he + ' ' + hm;
 		if(l == 0 && send && !emptytest){Q.qt_newrows(send);}
 		if(l == 0 && send && emptytest){Q.sendit();}
 
-		$("alivedata ld").each(function(index){
-			const al_id 	= $(this).attr("title").trim(),
-			      bl_id 	= $(bl+al_id+"']").attr("title"),
-				  bl_date 	= $(bl+al_id+"']").html(),
-				  al_date	= $(this).html(),
-				  e 		= 'edit_editor',
-				  f 		= 'missing_editor',
-				  u 		= $("#bu"+al_id),
-				  d 		= $("#editor"+al_id);
+		$('alivedata ld').each(function(){
+			const al_id 	= $(this).attr('title').trim(),
+				bl_id 		= $(bl+al_id+"']").attr('title'),
+				bl_date 	= $(bl+al_id+"']").html(),
+				al_date		= $(this).html(),
+				e 			= 'edit_editor',
+				f 			= 'missing_editor',
+				u 			= $('#bu'+al_id),
+				d 			= $('#editor'+al_id);
 
-			if(al_id + bl_id === al_id + "undefined"){
+			if(al_id + bl_id === al_id + 'undefined'){
 				$(this)				.addClass(hm).removeClass(m);
 				u					.addClass(hm);
 				d					.addClass(f);
@@ -841,13 +803,13 @@ const Q = {
 			}
 		});
 		let any_missing = 0;
-		$("blivedata ld").each(function(index){
-			const bl_id   = $(this).attr("title").trim(),
-				  al_id   = $(al+bl_id+"']").attr("title"),
-				  al_date = $(al+bl_id+"']").html(),
-				  bl_date = $(this).html();
+		$('blivedata ld').each(function(index){
+			const bl_id   = $(this).attr('title').trim(),
+				al_id   = $(al+bl_id+"']").attr('title'),
+				al_date = $(al+bl_id+"']").html(),
+				bl_date = $(this).html();
 
-			if(bl_id + al_id === bl_id + "undefined"){
+			if(bl_id + al_id === bl_id + 'undefined'){
 				$(this).addClass(hm).removeClass(m);
 				any_missing++;
 			}else if(bl_date === al_date.trim()){
@@ -855,40 +817,52 @@ const Q = {
 			}else if(bl_date !== al_date.trim()){
 				$(this).addClass(he).removeClass(m);
 			}
-			if($("blivedata ld").length === (index+1)){
+			if($('blivedata ld').length === (index+1)){
 				if(send && any_missing == 0){Q.sendit();}
 				if(any_missing !== 0){Q.qt_newrows(send);}
 			}
 		});},
-		au: {}};
+	au: {}};
 
 
-/*Activate all the buttons, load the inmenu and get local storage, start to detect changes and load all recent.*/
-Q.all_buttons();
-Q.inmenu();
-Q.first_load();
+
 
 
 
 /*Add ACE editor to the inmenu*/
 let im;
 $(document).ready(()=>{
+
+
+
+	/*Detect if in save mode*/
+	if(window.location.href.slice(-2) =='?!'){
+		save_mode = true;
+		let notifi = page;
+		if(notifi==='') notifi = 'Home';
+		$('body').addClass('save_mode').prepend(`<div class="intro">In this version of the ${notifi} page no html will run and you can view and permanently delete saves.</div>`);
+	}else save_mode = false;
+
+	console.log(save_mode);
+
+
+	/*Activate all the buttons, load the inmenu and get local storage, start to detect changes and load all recent.*/
+	Q.all_buttons();
+	Q.inmenu();
+	Q.first_load();
+
 	console.log('Main menu editor');
 
-	const imf = $("#qt");
-		im = ace.edit("editor");
+	const imf = $('#qt');
+	im = ace.edit('editor');
 	im.setTheme(def_theme);
-	im.getSession().setMode("ace/mode/html");
+	im.getSession().setMode('ace/mode/html');
 
-	if(!save_mode){
-		im.getSession().on("change", ()=>{
-			imf.val(im.getSession().getValue());
-			Q.inmenu_changed();
-		});
-	}
+	if(!save_mode) im.getSession().on('change', ()=>{ imf.val(im.getSession().getValue());	Q.inmenu_changed();	});
+
 	im.getSession().setUseWrapMode(true);
 	im.setOptions({
-		fontSize: "16px",
+		fontSize: '16px',
 		enableBasicAutocompletion: true,
 		enableSnippets: true,
 		enableLiveAutocompletion: true,
@@ -899,154 +873,160 @@ $(document).ready(()=>{
 	html = html.replace(/<scrupt/gi, '<script').replace(/<\/scrupt/gi, '<\/script');
 	im.setValue(html);
 
-	if(!save_mode){Q.ctrl_enter('inmenu');}
+	if(!save_mode) Q.ctrl_enter('inmenu');
 
 
 
-/* duble click menu**/
-/*
-const menu = document.querySelector('.menu');
-const toggleMenu = command => {
-  menu.style.display = command === "show" ? "block" : "none";
-};
+	/* duble click menu**/
+	/*
+	const menu = document.querySelector('.menu');
+	const toggleMenu = command => {
+	  menu.style.display = command === "show" ? "block" : "none";
+	};
 
-const setPosition = ({ top, left }) => {
-  menu.style.left = `${left}px`;
-  menu.style.top = `${top}px`;
-  toggleMenu('show');
-};
+	const setPosition = ({ top, left }) => {
+	  menu.style.left = `${left}px`;
+	  menu.style.top = `${top}px`;
+	  toggleMenu('show');
+	};
 
-document.addEventListener("click", e => {toggleMenu()});
+	document.addEventListener("click", e => {toggleMenu()});
 
-document.querySelector('#editor').addEventListener("dblclick", e => {
-  e.preventDefault();
-  const origin = {
-    left: e.pageX,
-    top: e.pageY
-  };
-  setPosition(origin);
-  return false;
-});
-*/
-
-});
+	document.querySelector('#editor').addEventListener("dblclick", e => {
+	  e.preventDefault();
+	  const origin = {
+		left: e.pageX,
+		top: e.pageY
+	  };
+	  setPosition(origin);
+	  return false;
+	});
+	*/
 
 
 
-/*Add ACE editor to all the code blocks*/
-$('qt_menu').children('.editor').each(function(index){
-	const id = $(this).attr('id').substring(6),
-		  h = $("#html"+id).html().trim();
-	let e;
-	if(save_mode){	e = str_replace(h.slice(6).slice(0, -7));
-	}else{			e = str_replace(h);}
-	qteditor = ace.edit(this);
-	qteditor.getSession().setMode("ace/mode/html");
-	qteditor.setTheme(def_theme);
-	qteditor.setValue(e,-1);
-	qteditor.getSession().setUseWrapMode(true);
-	qteditor.setOptions({
-		fontSize:"16px",
-		showGutter:false,
-		showPrintMargin:false
-	});});
+
+
+	/*Add ACE editor to all the code blocks*/
+	$('qt_menu').children('.editor').each(function(){
+		const id = $(this).attr('id').substring(6),
+			h = $('#html'+id).html().trim();
+		let e;
+		if(save_mode){	e = str_replace(h.slice(6).slice(0, -7));
+		}else{			e = str_replace(h);}
+		qteditor = ace.edit(this);
+		qteditor.getSession().setMode('ace/mode/html');
+		qteditor.setTheme(def_theme);
+		qteditor.setValue(e,-1);
+		qteditor.getSession().setUseWrapMode(true);
+		qteditor.setOptions({
+			fontSize:'16px',
+			showGutter:false,
+			showPrintMargin:false
+		});});
 
 
 
-/*Toggle the inmenu*/
-$('#btn_min').click(()=>{
-	console.log('#btn_min click');
-	Q.au.slide.play();
-	let t, b, cl, o, w, mb;
-	const bm = $('#btn_min'),
-		  d = $(document);
-	if($(this).attr('clicked') == 1){
-		mb = '40px'; t = 'add content'; cl = 0; o = 0; w = '105px';
-		if($('.small_r').is(":visible")){b = '-217px';}else{b = '-185px';}
-	}else{
-		mb = '260px'; t = '-'; b = 0; cl = 1; o = 1; w = '27px';
-		const h = d.height(), sh = d.scrollTop();
-		if(h<=(sh+813)){$('html, body').animate({scrollTop:h},'50');}
-	}
-	bm.animate({width:w},{complete:()=>{bm.text(t);}});
-	$('inmenu').animate({bottom:b});
-	$('body').animate({marginBottom:mb});
-	$('buttons').animate({opacity:o});
-	$(this).attr('clicked', cl);});
+	/*Toggle the inmenu*/
+	$('#btn_min').click(()=>{
+		console.log('#btn_min click');
+		Q.au.slide.play();
+		let t, b, cl, o, w, mb;
+		const bm = $('#btn_min'),
+			d = $(document);
+		if($(this).attr('clicked') == 1){
+			mb = '40px'; t = 'add content'; cl = 0; o = 0; w = '105px';
+			if($('.small_r').is(':visible')) b = '-217px';
+			else b = '-185px';
+		}else{
+			mb = '260px'; t = '-'; b = 0; cl = 1; o = 1; w = '27px';
+			const h = d.height(), sh = d.scrollTop();
+			if(h<=(sh+813)) $('html, body').animate({scrollTop:h},'50');
+		}
+		bm.animate({width:w},{complete:()=>{bm.text(t);}});
+		$('inmenu').animate({bottom:b});
+		$('body').animate({marginBottom:mb});
+		$('buttons').animate({opacity:o});
+		$(this).attr('clicked', cl);});
 
-/*Toggle the encryption input field (depends on the size of the screen)*/
-$(dec_trigg).click(()=>{
-	console.log(dec_trigg);
-	Q.au.slide.play();
-	let w,p,h,m,w2,p2,ml;
-	const
-		v = ':visible',
-		e = $(dec_trigg),
-		m1 = $('.small_r').is(v),
-		m2 = $('imp_toggle').is(v),
-		ro = $('r_out'),
-		pa = $('#page'),
-		ei = $(dec_input),
-		up = 'untoggle_page',
-		tp = 'toggled_page',
-		re = 'r_enc_big',
-		eb = 'enc_big';
+	/*Toggle the encryption input field (depends on the size of the screen)*/
+	$(dec_trigg).click(()=>{
+		console.log(dec_trigg);
+		Q.au.slide.play();
+		let l2,cl,w,p,h,m,w2,p2,ml;
+		const
+			v = ':visible',
+			e = $(dec_trigg),
+			m1 = $('.small_r').is(v),
+			m2 = $('imp_toggle').is(v),
+			ro = $('r_out'),
+			pa = $('#page'),
+			ei = $(dec_input),
+			up = 'untoggle_page',
+			tp = 'toggled_page',
+			re = 'r_enc_big',
+			eb = 'enc_big';
 
-	if(e.attr('clicked') == 1){
-		cl = 0; h = true; 	w = '0'; 		p = '4px 0'; 	m = '0';
-	}else{
-		cl = 1; h = false; 	w = '130px'; 	p = '4px 8px'; 	m = '8px';
-		e.addClass('decrypt_btn');
-		$(dec_input+'_form').css('display','inline-block');
-	}
-	e.attr('clicked', cl);
-	Q.enc_length(h);
-	if(m2&&h){	w2 = '125px'; 	p2 = '4px 8px'; ml = '8px';}
-	if(m2&&!h){	w2 = '0'; 		p2 = '4px 0'; 	ml = '0';}
-	if(m2){
-		pa.animate({width:w2, padding:p2, marginLeft:ml},{
-			complete:()=>{
-				if(h){pa.removeClass(up);}else{pa.addClass(up);}
-				pa.removeAttr('style');}
-		});
-	}
-	if(h){pa.removeClass(tp);}else{pa.addClass(tp);} //has to come after the m2 function
-	if(m1&&h){if(h){ro.removeClass(re);}else{ro.addClass(re);}}
-	if(!m1&&!h&&m2||!m1&&h){l2='300px';}
-	if(!m1&&!h&&!m2){		l2='450px';}
-	if(!m1&&h){ ro.animate({left:l2},{complete:()=>{ro.removeClass(re).removeAttr('style');}});}
-	if(!m1&&!h){ro.animate({left:l2});setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);}
-	ei.animate({width:w, padding:p, marginLeft:m},{
-		complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
-	});decrypt();});
+		if(e.attr('clicked') == 1){
+			cl = 0; h = true; 	w = '0'; 		p = '4px 0'; 	m = '0';
+		}else{
+			cl = 1; h = false; 	w = '130px'; 	p = '4px 8px'; 	m = '8px';
+			e.addClass('decrypt_btn');
+			$(dec_input+'_form').css('display','inline-block');
+		}
+		e.attr('clicked', cl);
+		Q.enc_length(h);
+		if(m2&&h){	w2 = '125px'; 	p2 = '4px 8px'; ml = '8px';}
+		if(m2&&!h){	w2 = '0'; 		p2 = '4px 0'; 	ml = '0';}
+		if(m2){
+			pa.animate({width:w2, padding:p2, marginLeft:ml},{
+				complete:()=>{
+					if(h) pa.removeClass(up);
+					else pa.addClass(up);
+					pa.removeAttr('style');}
+			});
+		}
+		if(h) pa.removeClass(tp);
+		else pa.addClass(tp); //has to come after the m2 function
+		if(m1&&h){
+			if(h) ro.removeClass(re);
+			else ro.addClass(re);
+		}
+		if(!m1&&!h&&m2||!m1&&h) l2='300px';
+		if(!m1&&!h&&!m2)		l2='450px';
+		if(!m1&&h) ro.animate({left:l2},{complete:()=>{ro.removeClass(re).removeAttr('style');}});
+		if(!m1&&!h)ro.animate({left:l2});setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);
+		ei.animate({width:w, padding:p, marginLeft:m},{
+			complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
+		}); decrypt();});
 
-/*Toggle the buttons next to each code block*/
-$('#hide_btn').click(()=>{
-	console.log('#hide_btn');
-	const s = $('styleholder'),
-		  h = $('#hide_btn');
-	if(s.html() == ""){
-		s.html('<style>button.qt_btn{display:none;}</style>');
-		h.html(ic('eye'));
-	}else{
-		s.empty();
-		h.html(ic('eye-red'));
-	}});
+	/*Toggle the buttons next to each code block*/
+	$('#hide_btn').click(()=>{
+		console.log('#hide_btn');
+		const s = $('styleholder'),
+			h = $('#hide_btn');
+		if(s.html() == ''){
+			s.html('<style>button.qt_btn{display:none;}</style>');
+			h.html(ic('eye'));
+		}else{
+			s.empty();
+			h.html(ic('eye-red'));
+		}});
 
-/*Send html block to qt server*/
-$('.send_btn').click(function(){
-	console.log('.send_btn');
-	if($(this).attr('id') === 'send_encrypted'){send_mode_enc = true;}else{send_mode_enc = false;}
-	const html = $('#qt').val().trim();
-	if(html === ""){return false;}
-	Q.ld(true);});
+	/*Send html block to qt server*/
+	$('.send_btn').click(function(){
+		console.log('.send_btn');
+		if($(this).attr('id') === 'send_encrypted') send_mode_enc = true;
+		else send_mode_enc = false;
+		const html = $('#qt').val().trim();
+		if(html === '') return false;
+		Q.ld(true);});
 
-
-(function(){
 
 	/*add the audio files to pre-load*/
-	const a = ['delete.mp3','edit.mp3','got.wav','here.wav','other.mp3','send.mp3','slide.mp3'];
-	for(const value of a){Q.au[value.split('.')[0]] = new Audio('r/sound/'+value);}
+	for(const value of ['delete.mp3','edit.mp3','got.wav','here.wav','other.mp3','send.mp3','slide.mp3']){
+		Q.au[value.split('.')[0]] = new Audio('r/sound/'+value);
+	}
 
 
 
@@ -1055,7 +1035,7 @@ $('.send_btn').click(function(){
 		//Refresh speed
 		const cm = 20;
 		let c = cm;
-	 	//Dont refresh if no one is looking
+		//Dont refresh if no one is looking
 		window.onblur  = ()=>{window.blurred = true; };
 		window.onfocus = ()=>{window.blurred = false;};
 		setInterval(()=>{
@@ -1079,4 +1059,5 @@ $('.send_btn').click(function(){
 		}, 1000);}
 
 
-})();
+
+});

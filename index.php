@@ -24,7 +24,13 @@
 	include 'r/php/translation.php';
 	include 'r/php/top.php';
 	include 'r/php/select.php';
-	if($clean_mode){echo "</body>\n</html>";}else{include 'r/php/bottom.php';}
+	if($clean_mode){
+		echo "</body>\n</html>";
+	}else{
+		echo "\n<live>";
+		include 'r/php/livedata.php';
+		echo "\n<styleholder></styleholder>\n</live>\n</body>\n</html>";
+	}
 
 
 
