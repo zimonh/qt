@@ -1,2 +1,6 @@
 [14-Jun-2018 07:11:56 CST6CDT] PHP Parse error:  syntax error, unexpected '"last_updated\"]."' (T_CONSTANT_ENCAPSED_STRING), expecting identifier (T_STRING) in /home/zimonh53/public_html/qt/r/php/items.php on line 30
 [14-Jun-2018 07:12:02 CST6CDT] PHP Parse error:  syntax error, unexpected '"last_updated\"]."' (T_CONSTANT_ENCAPSED_STRING), expecting identifier (T_STRING) in /home/zimonh53/public_html/qt/r/php/items.php on line 30
+[21-Jul-2018 18:49:41 CST6CDT] PHP Parse error:  syntax error, unexpected 'r' (T_STRING) in /home/zimonh53/public_html/qt/r/php/top.php on line 18
+[21-Jul-2018 18:49:43 CST6CDT] PHP Parse error:  syntax error, unexpected 'r' (T_STRING) in /home/zimonh53/public_html/qt/r/php/top.php on line 18
+[21-Jul-2018 18:50:47 CST6CDT] PHP Parse error:  syntax error, unexpected '}' in /home/zimonh53/public_html/qt/r/php/top.php on line 20
+[21-Jul-2018 18:50:48 CST6CDT] PHP Parse error:  syntax error, unexpected '}' in /home/zimonh53/public_html/qt/r/php/top.php on line 20
