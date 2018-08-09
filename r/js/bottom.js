@@ -1061,11 +1061,16 @@ $(document).ready(()=>{
 		}
 		if(!m1&&!h&&m2||!m1&&h) l2='300px';
 		if(!m1&&!h&&!m2)		l2='450px';
+
 		if(!m1&&h) ro.animate({left:l2},{complete:()=>{ro.removeClass(re).removeAttr('style');}});
-		if(!m1&&!h)ro.animate({left:l2});setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);
+
+		if(!m1&&!h){ ro.animate({left:l2}); setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);}
 		ei.animate({width:w, padding:p, marginLeft:m},{
 			complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
 		}); decrypt();});
+
+	//big_unc_inp r_enc_big
+	//big_unc_inp
 
 	/*Toggle the buttons next to each code block*/
 	$('#hide_btn').click(()=>{
