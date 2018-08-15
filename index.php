@@ -1,4 +1,5 @@
 <?php
+
 	//block the grabber script from cross origin
 	session_start(['cookie_lifetime' => 600,]);
 	$_SESSION["origin"] = true;
@@ -9,7 +10,7 @@
 
 	$page = (isset($_GET['p']) ? $_GET['p'] : null); //uses .htacces to redirect and set page variable
 
-	if(isset($_GET['!'])){$save_mode = true;}else{$save_mode = false;}; //triggerd with ?! at the end of url
+	if(isset($_GET['!'])){$save_mode  = true;}else{$save_mode  = false;}; //triggerd with ?! at the end of url
 	if(isset($_GET['@'])){$clean_mode = true;}else{$clean_mode = false;}; //triggerd with ?$ at the end of url
 
 	preg_match("/^[A-Za-z0-9,' .\-]+$/i", $page);
@@ -31,7 +32,5 @@
 		include 'r/php/livedata.php';
 		echo "\n<styleholder></styleholder>\n<styleholder2><style>html,body{background-color:#1d1d1d;}</style></styleholder2>\n</live>\n</body>\n</html>";
 	}
-
-
 
 ?>

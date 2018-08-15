@@ -19,8 +19,7 @@ const str_replace = (g,c)=>{
 		for (void 0 !== c && (c.value = 0), l = 0, r = g.length; l < r; l++)
 			if ('' !== g[l])
 				for (n = 0, p = u.length; n < p; n++) a = g[l] + '', i = y ? void 0 !== f[n] ? f[n] : '' : f[0], g[l] = a.split(u[n]).join(i), void 0 !== c && (c.value += a.split(u[n]).length - 1);
-		return b ? g : g[0];
-	},
+		return b ? g : g[0];},
 
 	dec_theme = 'ace/theme/cobalt',
 	dec_trigg = '#encr_btn',
@@ -42,8 +41,7 @@ const str_replace = (g,c)=>{
 			}
 			u.setValue(dec, -1);
 		}catch(e){u.setValue('encrypted', -1);}
-		u.setTheme(dec_theme);
-	},
+		u.setTheme(dec_theme);},
 
 	decrypt = ()=>{
 		//console.log('decrypt');
@@ -52,18 +50,14 @@ const str_replace = (g,c)=>{
 				html = enc.parent(),
 				id = $(this).parent().attr('id').slice(4);
 			uni_crypt(enc,html,id);
-		});
-	},
+		});},
 
 	AESd = date =>{
 		//console.log(date);
 		const enc  = $('#AESd'+date),
 			html = enc.parent(),
 			id   = html.attr('id').slice(4);
-		setTimeout(()=> uni_crypt(enc,html,id), 50);
-	};
-
-
+		setTimeout(()=> uni_crypt(enc,html,id), 50);};
 
 const def_theme = 'ace/theme/monokai',
 	def_theme_class = 'ace-monokai',
@@ -75,7 +69,6 @@ let	send_mode_enc,
 	resetcountdown = false,
 	menu_height = '345px',
 	save_mode = false;
-
 
 /*the Q object that creates a block around all the functions*/
 const Q = {
@@ -230,8 +223,7 @@ const Q = {
 		l.on('paste.reset cut.reset',function(){Q.changed(this);});
 		/*detect dragging text*/
 		if(el == dec_input)	l.on('dragend.reset',()=>{ Q.changed(el); });
-		else l.parent().on('dragend.reset',function(){ Q.changed($(this).find('textarea')); });
-	},
+		else l.parent().on('dragend.reset',function(){ Q.changed($(this).find('textarea')); });},
 
 	/*Triggers on change*/
 	changed(e){
@@ -889,10 +881,8 @@ const Q = {
 				if(any_missing !== 0){Q.qt_newrows(send);}
 			}
 		});},
+
 	au: {}};
-
-
-
 
 
 
@@ -934,28 +924,23 @@ $(document).ready(()=>{
 		enableSnippets: true,
 		enableLiveAutocompletion: true,
 		showGutter: false,
-		showPrintMargin: false
-	});
+		showPrintMargin: false});
 	let html = $('#qt').val();
 	html = html.replace(/<scrupt/gi, '<script').replace(/<\/scrupt/gi, '<\/script');
 	im.setValue(html);
 
 	if(!save_mode) Q.ctrl_enter('inmenu');
 
-
-
 	/* double click menu**/
 	/*
 	const menu = document.querySelector('.menu');
 	const toggleMenu = command => {
-	  menu.style.display = command === "show" ? "block" : "none";
-	};
+	  menu.style.display = command === "show" ? "block" : "none";};
 
 	const setPosition = ({ top, left }) => {
 	  menu.style.left = `${left}px`;
 	  menu.style.top = `${top}px`;
-	  toggleMenu('show');
-	};
+	  toggleMenu('show');};
 
 	document.addEventListener("click", e => {toggleMenu()});
 
@@ -966,12 +951,8 @@ $(document).ready(()=>{
 		top: e.pageY
 	  };
 	  setPosition(origin);
-	  return false;
-	});
+	  return false;});
 	*/
-
-
-
 
 
 	/*Add ACE editor to all the code blocks*/
@@ -991,8 +972,6 @@ $(document).ready(()=>{
 			showGutter:false,
 			showPrintMargin:false
 		});});
-
-
 
 	/*Toggle the inmenu*/
 	$('#btn_min').click(()=>{
@@ -1069,9 +1048,6 @@ $(document).ready(()=>{
 			complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
 		}); decrypt();});
 
-	//big_unc_inp r_enc_big
-	//big_unc_inp
-
 	/*Toggle the buttons next to each code block*/
 	$('#hide_btn').click(()=>{
 		//console.log('#hide_btn');
@@ -1094,13 +1070,9 @@ $(document).ready(()=>{
 		if(html === '') return false;
 		Q.ld(true);});
 
-
 	/*add the audio files to pre-load*/
 	for(const value of ['delete.mp3','edit.mp3','got.wav','here.wav','other.mp3','send.mp3','slide.mp3']){
-		Q.au[value.split('.')[0]] = new Audio('r/sound/'+value);
-	}
-
-
+		Q.au[value.split('.')[0]] = new Audio('r/sound/'+value);}
 
 	/*Timer that triggers the refresh*/
 	if(!save_mode){
@@ -1129,7 +1101,5 @@ $(document).ready(()=>{
 			$('#btn_min').css('background-color',rgb);
 
 		}, 1000);}
-
-
 
 });
