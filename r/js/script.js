@@ -931,30 +931,6 @@ $(document).ready(()=>{
 
 	if(!save_mode) Q.ctrl_enter('inmenu');
 
-	/* double click menu**/
-	/*
-	const menu = document.querySelector('.menu');
-	const toggleMenu = command => {
-	  menu.style.display = command === "show" ? "block" : "none";};
-
-	const setPosition = ({ top, left }) => {
-	  menu.style.left = `${left}px`;
-	  menu.style.top = `${top}px`;
-	  toggleMenu('show');};
-
-	document.addEventListener("click", e => {toggleMenu()});
-
-	document.querySelector('#editor').addEventListener("dblclick", e => {
-	  e.preventDefault();
-	  const origin = {
-		left: e.pageX,
-		top: e.pageY
-	  };
-	  setPosition(origin);
-	  return false;});
-	*/
-
-
 	/*Add ACE editor to all the code blocks*/
 	$('qt_menu').children('.editor').each(function(){
 		const id = $(this).attr('id').substring(6),
