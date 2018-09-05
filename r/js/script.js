@@ -1078,4 +1078,11 @@ $(document).ready(()=>{
 
 		}, 1000);}
 
+	/*warn on leave if changes are made*/
+	window.onbeforeunload = function() {
+		if(document.querySelectorAll('.hl_live').length>0){
+			return 'You have unsaved changes!';
+		}
+	};
+
 });
