@@ -455,7 +455,6 @@ const Q = {
 			dataType: 'text',
 			success: function(data){
 				Q.single_row(id,data);
-				$('#editor'+id).removeClass('live_editor edit_editor');
 			}
 		});},
 
@@ -494,9 +493,9 @@ const Q = {
 	/*Name a save and send it to the qt server*/
 	namesave(e){
 		//console.log('namesave');
-		const p 	= $(e).parent(),
+		const p = $(e).parent(),
 			date 	= p.attr('saves_date').replace(/_/g,' '),
-			n 		= '.namesave_input',
+			n 	= '.namesave_input',
 			name 	= p.find(n).val();
 		$.ajax({
 			url: 'r/ajax/qt_name.php',
@@ -629,10 +628,10 @@ const Q = {
 	/*Get latest version of this code block.*/
 	refresh(e){
 		//console.log('refresh');
-		const id 	= $(e).parent().attr('id').substring(2),
-			a   	= $('#qt'+id).parent(),
-			l   	= `livedata > ld[title='${id}']`;
-		let n 		= 1;
+		const id = $(e).parent().attr('id').substring(2),
+			a   = $('#qt'+id).parent(),
+			l   = `livedata > ld[title='${id}']`;
+		let n = 1;
 		if($('#bu'+id).hasClass('hl_missing')){
 			Q.au.delete.play();
 			a.remove();
@@ -651,12 +650,12 @@ const Q = {
 			data:{id: id},
 			dataType: 'text',
 			success: function(data){
-				let result 	= '';
-				const b 	= '<button title="',
-					u 		= '</button>',
-					s 		= $('#saves'+id),
-					i 		= $('#qt'+id),
-					t 		= $('#bu'+id);
+				let result = '';
+				const b = '<button title="',
+					u = '</button>',
+					s = $('#saves'+id),
+					i = $('#qt'+id),
+					t = $('#bu'+id);
 				data = data.split('~');
 				data.pop();
 				for(const value of data){
@@ -702,10 +701,10 @@ const Q = {
 
 	/*Triggered by the delete button.*/
 	deleter(e){
-		const id 	= $(e).parent().attr('id').substring(2),
-			t 		= $('#qt'+id).parent(),
-			p 		= t.parent().prop('nodeName') === 'ALL',
-			s 		= $('#saves'+id);
+		const id = $(e).parent().attr('id').substring(2),
+			t = $('#qt'+id).parent(),
+			p = t.parent().prop('nodeName') === 'ALL',
+			s = $('#saves'+id);
 
 		if( !$('#bu'+id).hasClass('hl_live') &&	s.find('.hl_live').length === 1){
 			const date = s.find('.hl_live').parent().attr('saves_date').replace(/_/g,' ');
@@ -1022,11 +1021,7 @@ $(document).ready(()=>{
 
 		if(!m1&&!h){ ro.animate({left:l2}); setTimeout(()=>{ro.addClass(re).removeAttr('style');}, 800);}
 		ei.animate({width:w, padding:p, marginLeft:m},{
-			complete:()=>{
-				if(!h)ei.addClass(eb);
-				else ei.removeClass(eb);
-				ei.css('width','');
-			}
+			complete:()=>{if(!h){ei.addClass(eb);}else{ei.removeClass(eb);}ei.css('width','');}
 		}); decrypt();});
 
 	/*Toggle the buttons next to each code block*/
@@ -1066,6 +1061,11 @@ $(document).ready(()=>{
 		setInterval(()=>{
 
 			if(resetcountdown){c = cm; resetcountdown = false;}
+			/*if(c > (cm-2)){
+			//console.log(c);
+			}if(c < 3){
+			//console.log(c);
+			}*/
 			if(window.blurred){c = 3; return;}
 			if(c === 0){ Q.ld(false);c = cm;}
 			--c;
@@ -1079,8 +1079,10 @@ $(document).ready(()=>{
 		}, 1000);}
 
 	/*warn on leave if changes are made*/
-	window.onbeforeunload = () => {
-		if($('.hl_live').length > 0) return 'You have unsaved changes!';
+	window.onbeforeunload = function() {
+		if(document.querySelectorAll('.hl_live').length>0){
+			return 'You have unsaved changes!';
+		}
 	};
 
 });

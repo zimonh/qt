@@ -90,7 +90,7 @@ if($_SESSION["origin"]){
 	}
 	}
 
-	if($href === 'http://www.mrlovenstein.com'){$str = str_replace('.png','_rollover.png',$str->saveHtml());}
+	if($href === 'http://www.mrlovenstein.com'){$str = str_replace('.png','_rollover.png',$str);}
 
 	echo $str;
 
