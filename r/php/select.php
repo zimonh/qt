@@ -1,10 +1,12 @@
 <?php
-
 if($clean_mode){ $output = '';}else{ $output = '<all>';}
 
 $pages 	= explode(',',$page);
 $qMarks = str_repeat('?,', count($pages) - 1) . '?';
 $done   = array();
+
+
+include 'r/connect/select.php';
 
 $stmt 	= $pdo->prepare("
 	SELECT 	id, html_blob, page_name, last_updated
@@ -12,7 +14,10 @@ $stmt 	= $pdo->prepare("
 	WHERE 	`page_name`
 	IN 		($qMarks)
 	ORDER BY id ASC");
+
 $stmt->execute($pages);
+
+
 if ($stmt->rowCount() > 0){
 	$check = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach($check as $encoded) {
